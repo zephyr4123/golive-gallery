@@ -1,1 +1,1 @@
-{"root":["./src/app.tsx","./src/main.tsx"],"version":"5.6.3"}
+{"root":["./src/app.tsx","./src/main.tsx","./src/components/sitenav.tsx","./src/data/voyages.ts","./src/pages/atelier.tsx","./src/pages/codex.tsx","./src/pages/immersions.tsx","./src/pages/journal.tsx","./src/pages/landing.tsx","./src/pages/reserve.tsx","./src/pages/voyagedetail.tsx","./src/pages/voyages.tsx"],"version":"5.6.3"}

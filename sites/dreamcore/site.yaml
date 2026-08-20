@@ -1,8 +1,8 @@
 # dreamcore —— 站点唯一真相源:部署、画廊索引、教程互链、CI 校验都从这份清单派生
 # 字段定义见 cli/src/core/schema.ts;校验:npx golive check
 name: dreamcore
-title: 云梦旅行社
-description: 贩卖梦境的旅行社——帷幕拉开、穿越传送门、九条梦境航线的云端摩天轮;示范 GitHub Pages 部署
+title: Reverie
+description: Reverie——贩卖梦境的旅行社(英文站):传送门穿越 + 九条梦境航线,多页面 SPA;示范 GitHub Pages 部署
 subdomain: dreamcore # => dreamcore.golive-gallery.art
 difficulty: 1 # 1-5,驱动画廊排序与学习路线
 status: building # draft | building | live | archived(live 前先把教程写完)

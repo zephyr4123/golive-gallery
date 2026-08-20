@@ -1,4 +1,4 @@
-# 云梦旅行社(dreamcore.golive-gallery.art)
+# Reverie(dreamcore.golive-gallery.art)
 
 > 站点:[`sites/dreamcore`](../../sites/dreamcore) · 部署方式:github-pages
 
