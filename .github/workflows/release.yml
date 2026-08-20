@@ -1,0 +1,49 @@
+# ┌─ 这个 workflow 在教什么 ─────────────────────────────────────────────
+# │ "tag 即发版":维护者本地跑 `npm version patch|minor|major`(它原子地完成
+# │ 改版本号 + 提交 + 打 tag 三件事),再 `git push --follow-tags`,本 workflow
+# │ 被 v* tag 触发,把 CHANGELOG 里对应版本的条目变成 GitHub Release。
+# │ 三道门禁全是机器判据,人不用记规矩:
+# │   1. tag 必须与 package.json 版本一致(防 tag 漂移)
+# │   2. CHANGELOG 必须有本版本的非空条目(防"发了版没人知道改了啥")
+# │   3. golive check 必须绿(发版不豁免质量门禁)
+# └────────────────────────────────────────────────────────────────────
+name: release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write # 创建 Release 需要写权限,其余默认只读
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: npm
+      - run: npm ci
+
+      - name: 门禁 1:tag 与 package.json 版本一致
+        run: |
+          EXPECTED="v$(node -p "require('./package.json').version")"
+          if [ "$GITHUB_REF_NAME" != "$EXPECTED" ]; then
+            echo "::error::tag $GITHUB_REF_NAME 与 package.json 的 $EXPECTED 不一致——用 npm version 打 tag,别手打"
+            exit 1
+          fi
+
+      - name: 门禁 2:CHANGELOG 有本版本条目
+        run: node scripts/changelog.mjs verify
+
+      - name: 门禁 3:质量门禁
+        run: npx golive check
+
+      - name: 创建 GitHub Release(正文取自 CHANGELOG 对应条目)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          node scripts/changelog.mjs extract > /tmp/notes.md
+          gh release create "$GITHUB_REF_NAME" --title "$GITHUB_REF_NAME" --notes-file /tmp/notes.md

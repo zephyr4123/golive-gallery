@@ -11,7 +11,10 @@
     "golive": "./cli/bin/golive.js"
   },
   "scripts": {
-    "check": "node cli/bin/golive.js check"
+    "check": "node cli/bin/golive.js check",
+    "preversion": "node cli/bin/golive.js check",
+    "version": "node scripts/changelog.mjs verify",
+    "postversion": "echo \"✓ 版本已提交并打 tag。发布:git push --follow-tags origin main(release.yml 会自动建 Release)\""
   },
   "dependencies": {
     "commander": "^14.0.0",
