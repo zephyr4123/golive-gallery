@@ -15,3 +15,6 @@ AGENTS.md
 # 系统杂物
 .DS_Store
 *.log
+
+# Claude Code 本机个人配置(.claude/ 目录本身保留:项目会产出开源 skill)
+.claude/settings.local.json
