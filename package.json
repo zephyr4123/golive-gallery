@@ -1,0 +1,23 @@
+{
+  "name": "golive-gallery",
+  "version": "0.1.0",
+  "private": true,
+  "description": "高审美网站示范 × 三档部署教学 —— <BASE_DOMAIN>",
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "bin": {
+    "golive": "./cli/src/main.ts"
+  },
+  "scripts": {
+    "check": "node cli/src/main.ts check"
+  },
+  "dependencies": {
+    "commander": "^14.0.0",
+    "execa": "^9.6.0",
+    "picocolors": "^1.1.1",
+    "yaml": "^2.8.0",
+    "zod": "^4.0.0"
+  }
+}
