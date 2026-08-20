@@ -1,5 +1,6 @@
 import pc from 'picocolors'
 import { loadRegistry } from '../core/registry.ts'
+import { BASE_DOMAIN } from '../core/config.ts'
 
 const STATUS_ICON: Record<string, string> = {
   draft: pc.dim('◌ draft'),
@@ -33,7 +34,7 @@ export function listCommand(options: { json?: boolean }): void {
     const stars = '⭐'.repeat(m.difficulty)
     console.log(`  ${pc.bold(m.name.padEnd(16))} ${STATUS_ICON[m.status]}`)
     console.log(`  ${pc.dim('│')} ${m.title} — ${m.description}`)
-    console.log(`  ${pc.dim('│')} ${pc.cyan(`${m.subdomain}.<BASE_DOMAIN>`)}  ${pc.dim('·')}  ${m.deploy.target}  ${pc.dim('·')}  难度 ${stars}`)
+    console.log(`  ${pc.dim('│')} ${pc.cyan(`${m.subdomain}.${BASE_DOMAIN}`)}  ${pc.dim('·')}  ${m.deploy.target}  ${pc.dim('·')}  难度 ${stars}`)
     console.log(`  ${pc.dim('└')} 教程:${pc.dim(m.docs)}`)
     console.log()
   }

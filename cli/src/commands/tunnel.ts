@@ -1,6 +1,7 @@
 import pc from 'picocolors'
 import { getSite } from '../core/registry.ts'
 import { tunnelAdapter } from '../adapters/tunnel.ts'
+import { BASE_DOMAIN } from '../core/config.ts'
 
 export function tunnelCommand(name: string): void {
   const site = getSite(name)
@@ -8,7 +9,7 @@ export function tunnelCommand(name: string): void {
     throw new Error(`站点「${name}」的部署方式是 ${site.manifest.deploy.target},不是隧道`)
   }
 
-  console.log(pc.bold(`\n${site.name} —— 内网穿透(${site.manifest.subdomain}.<BASE_DOMAIN>)\n`))
+  console.log(pc.bold(`\n${site.name} —— 内网穿透(${site.manifest.subdomain}.${BASE_DOMAIN})\n`))
   console.log(pc.dim('前置检查:'))
   for (const check of tunnelAdapter.preflight(site)) {
     console.log(`  ${check.ok ? pc.green('✓') : pc.yellow('⚠')} ${check.label}`)

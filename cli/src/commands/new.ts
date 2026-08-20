@@ -4,6 +4,7 @@ import pc from 'picocolors'
 import { repoRoot, sitesDir, templatesDir, docsDir } from '../core/paths.ts'
 import { loadRegistry } from '../core/registry.ts'
 import { TUNNEL_PROVIDERS, RESERVED_SUBDOMAINS } from '../core/schema.ts'
+import { BASE_DOMAIN } from '../core/config.ts'
 
 interface NewOptions {
   subdomain?: string
@@ -64,7 +65,7 @@ export function newCommand(name: string, options: NewOptions): void {
 name: ${name}
 title: ${JSON.stringify(title)}
 description: TODO 一句话说明主题与示范的部署方式
-subdomain: ${subdomain} # => ${subdomain}.<BASE_DOMAIN>
+subdomain: ${subdomain} # => ${subdomain}.${BASE_DOMAIN}
 difficulty: ${difficulty} # 1-5,驱动画廊排序与学习路线
 status: draft # draft | building | live | archived(live 前先把教程写完)
 tags: []
@@ -90,7 +91,7 @@ availability: ${options.target === 'tunnel' ? 'best-effort # 隧道档:本机在
   fs.mkdirSync(path.join(docsDir, 'sites'), { recursive: true })
   fs.writeFileSync(
     docsPath,
-    `# ${title}(${subdomain}.<BASE_DOMAIN>)
+    `# ${title}(${subdomain}.${BASE_DOMAIN})
 
 > 站点:[\`sites/${name}\`](../../sites/${name}) · 部署方式:${options.target}
 
@@ -98,7 +99,7 @@ TODO:实战教程。正文教手动步骤;文末"一条命令搞定"栏目对照
 `,
   )
 
-  console.log(pc.green(`✓ sites/${name} 已创建(${options.target} → ${subdomain}.<BASE_DOMAIN>)`))
+  console.log(pc.green(`✓ sites/${name} 已创建(${options.target} → ${subdomain}.${BASE_DOMAIN})`))
   console.log(pc.dim(`  下一步:cd sites/${name} && npm i && npm run dev;教程骨架在 ${docsRel}`))
 }
 

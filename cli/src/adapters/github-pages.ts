@@ -3,6 +3,7 @@ import path from 'node:path'
 import type { DeployAdapter } from './types.ts'
 import { commandExists } from '../core/exec.ts'
 import { repoRoot } from '../core/paths.ts'
+import { BASE_DOMAIN } from '../core/config.ts'
 
 // GitHub Pages:仓内至多一个站(平台硬限制),经官方 Actions 链路部署。
 // 本适配器的 plan 描述的是 CI 里发生的事——它由 push 触发,而非本地执行。
@@ -35,7 +36,7 @@ export const githubPagesAdapter: DeployAdapter = {
       `# 以下由 GitHub Actions 在云端执行(见 .github/workflows/):`,
       `cd sites/${site.name} && npm ci && ${site.manifest.build.command}`,
       `actions/upload-pages-artifact  # 上传 ${site.manifest.build.output}/`,
-      `actions/deploy-pages           # 发布到 ${site.manifest.subdomain}.<BASE_DOMAIN>`,
+      `actions/deploy-pages           # 发布到 ${site.manifest.subdomain}.${BASE_DOMAIN}`,
     ]
   },
 }

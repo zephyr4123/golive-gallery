@@ -1,6 +1,7 @@
 import pc from 'picocolors'
 import { getSite } from '../core/registry.ts'
 import { adapters } from '../adapters/index.ts'
+import { BASE_DOMAIN } from '../core/config.ts'
 
 // --dry-run 是教学功能不是调试功能:打印出与教程正文一致的底层命令,
 // 让读者完成"理解 → 自动化"的认知闭环。
@@ -15,7 +16,7 @@ export function deployCommand(name: string, options: { dryRun?: boolean }): void
   }
 
   const adapter = adapters[target]
-  console.log(pc.bold(`\n${site.name} → ${target}(${site.manifest.subdomain}.<BASE_DOMAIN>)\n`))
+  console.log(pc.bold(`\n${site.name} → ${target}(${site.manifest.subdomain}.${BASE_DOMAIN})\n`))
 
   console.log(pc.dim('前置检查:'))
   let failed = false

@@ -1,6 +1,7 @@
 import type { Site } from '../core/registry.ts'
 import type { DeployAdapter } from './types.ts'
 import { commandExists } from '../core/exec.ts'
+import { BASE_DOMAIN } from '../core/config.ts'
 
 // 内网穿透档:与其他档位是不同物种——"本机长驻进程"而非"一次性发布动作"。
 // 所以它不走 golive deploy,由 golive tunnel 命令单独承载;本文件只提供
@@ -34,7 +35,7 @@ export const tunnelAdapter: DeployAdapter = {
       `cd sites/${site.name} && npm ci && ${site.manifest.build.command}`,
       `npx vite preview --port ${localPort}  # 本地伺服构建产物`,
     ]
-    const bySubdomain = `${site.manifest.subdomain}.<BASE_DOMAIN>`
+    const bySubdomain = `${site.manifest.subdomain}.${BASE_DOMAIN}`
     switch (provider) {
       case 'cloudflared':
         return [...serve, `cloudflared tunnel run  # 按 infra/tunnel/cloudflared.example.yml,将 ${bySubdomain} 路由到 localhost:${localPort}`]
