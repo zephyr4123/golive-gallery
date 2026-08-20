@@ -6,4 +6,4 @@
 | 子域名 | 类型 | 指向 | 用途 | 状态 |
 |---|---|---|---|---|
 | `<BASE_DOMAIN>` | — | (画廊主站,待定) | 展厅入口 | 未配置 |
-| `dreamcore` | CNAME | `<user>.github.io` | GitHub Pages 示范(Reverie) | 未配置 |
+| `dreamcore` | CNAME | `zephyr4123.github.io` | GitHub Pages 示范(Reverie) | 待解析生效 |
