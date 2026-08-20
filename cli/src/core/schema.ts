@@ -47,7 +47,8 @@ export const siteSchema = z.object({
     .object({
       generator: z.enum(['motionsites', 'custom']),
       promptId: z.string().optional(),
-      // localized = 图片已下载进本站 public/;cdn = 仍外链第三方(上线前必须清零)
+      // 资产形态登记(纯溯源):cdn = 直用素材方 CDN(MotionSites 会员协议允许,且不撑大仓库);
+      // localized = 已下载进本站 public/;none = 无外部资产
       assets: z.enum(['localized', 'cdn', 'none']).default('none'),
     })
     .default({ generator: 'custom', assets: 'none' }),

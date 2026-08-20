@@ -70,7 +70,7 @@ difficulty: ${difficulty} # 1-5,驱动画廊排序与学习路线
 status: draft # draft | building | live | archived(live 前先把教程写完)
 tags: []
 
-source: # 素材溯源;prompt 原文是付费资产只记编号,图片上线前必须 localized
+source: # 素材溯源;prompt 原文是付费资产只记编号;资产直用素材方 CDN 时标 assets: cdn
   generator: custom
   assets: none
 

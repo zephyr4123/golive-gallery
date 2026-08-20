@@ -129,9 +129,6 @@ function crossValidate(sites: Site[], issues: Issue[]): void {
     if (m.deploy.target === 'tunnel' && m.availability !== 'best-effort') {
       issues.push({ site: site.name, level: 'warn', message: '隧道档站点建议标 availability: best-effort(本机不在线站点即离线)' })
     }
-    if (m.status === 'live' && m.source.assets === 'cdn') {
-      issues.push({ site: site.name, level: 'warn', message: '状态 live 但资产仍外链第三方 CDN(assets: cdn)——上线前应本地化,防外链腐烂' })
-    }
   }
 
   // GitHub Pages 硬限制:一个仓库只能承载一个 Pages 站、绑一个自定义域
