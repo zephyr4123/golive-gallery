@@ -1,0 +1,23 @@
+# hello —— 站点唯一真相源:部署、画廊索引、教程互链、CI 校验都从这份清单派生
+# 字段定义见 cli/src/core/schema.ts;校验:npx golive check
+name: hello
+title: Hello GoLive
+description: TODO 一句话说明主题与示范的部署方式
+subdomain: hello # => hello.<BASE_DOMAIN>
+difficulty: 1 # 1-5,驱动画廊排序与学习路线
+status: draft # draft | building | live | archived(live 前先把教程写完)
+tags: []
+
+source: # 素材溯源;prompt 原文是付费资产只记编号,图片上线前必须 localized
+  generator: custom
+  assets: none
+
+build:
+  command: npm run build
+  output: dist
+
+deploy:
+  target: github-pages # 注意:一个仓库只能承载一个 Pages 站
+
+docs: docs/sites/hello.md
+availability: always
