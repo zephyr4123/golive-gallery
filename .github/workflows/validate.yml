@@ -1,0 +1,24 @@
+# ┌─ 这个 workflow 在教什么 ─────────────────────────────────────────────
+# │ CI 门禁 = 本地 `npx golive check` 的云端版:两边跑同一份代码,本地过 = CI 过。
+# │ 校验内容:site.yaml 合法、子域名全仓唯一、"站点 ↔ 教程"一一对应、
+# │ 清单里不许出现疑似凭据字段。
+# │ 想在自己项目里抄走它:只需 setup-node + 跑你自己的校验脚本这两步。
+# └────────────────────────────────────────────────────────────────────
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: npm
+      - run: npm ci
+      - run: npx golive check

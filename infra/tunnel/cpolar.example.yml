@@ -1,0 +1,9 @@
+# cpolar 配置模板 —— 付费订阅绑定自定义域名(海外节点免备案)
+# authtoken 用 `cpolar authtoken <TOKEN>` 写入本机 ~/.cpolar/,不进仓库
+
+tunnels:
+  golive-home:
+    proto: http
+    addr: "4173"
+    region: us          # 大陆节点要求域名已备案,.gallery 走海外节点
+    hostname: home.<BASE_DOMAIN>   # 自定义域名需在 cpolar 后台配置 CNAME

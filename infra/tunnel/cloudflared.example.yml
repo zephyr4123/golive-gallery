@@ -1,0 +1,12 @@
+# Cloudflare Tunnel 配置模板 —— 免费把自有子域名路由到本机
+# 前提:<BASE_DOMAIN> 的 DNS 托管在 Cloudflare
+# 用法:cloudflared tunnel create golive → 凭据落在 ~/.cloudflared/(不进仓库)
+#       复制本文件为 ~/.cloudflared/config.yml 并填 tunnel id
+
+tunnel: <TUNNEL_ID>
+credentials-file: ~/.cloudflared/<TUNNEL_ID>.json
+
+ingress:
+  - hostname: home.<BASE_DOMAIN>
+    service: http://localhost:4173
+  - service: http_status:404
