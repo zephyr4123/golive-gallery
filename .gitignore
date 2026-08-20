@@ -1,0 +1,17 @@
+# 依赖与构建产物
+node_modules/
+dist/
+
+# 本地环境与密钥(真值绝不进库,.env.example 作占位清单)
+.env
+.env.*
+!.env.example
+
+# AI 协作脚手架(本机私有注入,不进版本库)
+CLAUDE.md
+CLAUDE.local.md
+AGENTS.md
+
+# 系统杂物
+.DS_Store
+*.log
