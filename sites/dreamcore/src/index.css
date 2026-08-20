@@ -1,0 +1,33 @@
+@import 'tailwindcss';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  background: #0a0608;
+  scroll-behavior: auto;
+}
+
+body {
+  margin: 0;
+  font-family: 'Imprima', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+html {
+  scrollbar-gutter: stable;
+}
+
+@keyframes bobUp {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}

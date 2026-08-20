@@ -1,0 +1,24 @@
+# dreamcore —— 站点唯一真相源:部署、画廊索引、教程互链、CI 校验都从这份清单派生
+# 字段定义见 cli/src/core/schema.ts;校验:npx golive check
+name: dreamcore
+title: Reverie
+description: Reverie——贩卖梦境的旅行社(英文站):传送门穿越 + 九条梦境航线,多页面 SPA;示范 GitHub Pages 部署
+subdomain: dreamcore # => dreamcore.golive-gallery.art
+difficulty: 1 # 1-5,驱动画廊排序与学习路线
+status: building # draft | building | live | archived(live 前先把教程写完)
+tags: [沉浸式, 滚动叙事, 视差, react]
+
+source: # 素材溯源;prompt 原文是付费资产只记编号;资产直用素材方 CDN 时标 assets: cdn
+  generator: motionsites
+  promptId: dreamcore-landing
+  assets: cdn
+
+build:
+  command: npm run build
+  output: dist
+
+deploy:
+  target: github-pages # 注意:一个仓库只能承载一个 Pages 站
+
+docs: docs/sites/dreamcore.md
+availability: always

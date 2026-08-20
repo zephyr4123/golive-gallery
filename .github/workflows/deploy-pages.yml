@@ -1,0 +1,51 @@
+# ┌─ 这个 workflow 在教什么 ─────────────────────────────────────────────
+# │ GitHub Pages 部署链路(免费托管档):push 到 main 且 dreamcore 有变更时,
+# │ 在云端构建静态产物并发布。三个官方 Action 各司其职:
+# │   configure-pages         声明本仓库启用 Pages
+# │   upload-pages-artifact   把 dist/ 打包成 Pages 专用产物
+# │   deploy-pages            发布(需要 pages+id-token 写权限,走 OIDC)
+# │ 注意平台硬限制:一个仓库只能有一个 Pages 站——所以只有 dreamcore 走这条链路。
+# └────────────────────────────────────────────────────────────────────
+name: deploy-pages
+
+on:
+  push:
+    branches: [main]
+    paths: ['sites/dreamcore/**', '.github/workflows/deploy-pages.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+      - run: npm ci
+        working-directory: sites/dreamcore
+      - run: npm run build
+        working-directory: sites/dreamcore
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: sites/dreamcore/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
