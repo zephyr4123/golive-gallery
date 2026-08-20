@@ -20,15 +20,15 @@ interface WonderCard {
 }
 
 const CARDS: WonderCard[] = [
-  { title: 'Hidden Realms', desc: 'Luminous sanctuaries unseen by wandering eyes', color: '#f3cdd6' },
-  { title: 'Wild Solitudes', desc: 'Dissolve into untamed horizons and deep calm', color: '#dcedc2' },
-  { title: 'Silent Havens', desc: 'Remote escapes far beyond ordinary reach', color: '#c3e3f4' },
-  { title: 'Bespoke Quests', desc: 'Journeys shaped around your vision and soul', color: '#f0e4c0' },
-  { title: 'Vivid Drifts', desc: 'Surreal passages through breathtaking terrain', color: '#dcd2f2' },
-  { title: 'Mystic Crests', desc: 'Timeless ridgelines wrapped in cloud and myth', color: '#f3cdd6' },
-  { title: 'Deep Currents', desc: 'Glowing depths alive with uncharted wonder', color: '#c3e3f4' },
-  { title: 'Gilded Dusk', desc: 'Amber horizons that stretch past all reason', color: '#f0e4c0' },
-  { title: 'Glassy Tides', desc: 'Calm waters holding skies of pure stillness', color: '#dcedc2' },
+  { title: '隐世秘境', desc: '游人从未见过的发光庇护所', color: '#f3cdd6' },
+  { title: '野旷孤旅', desc: '溶入无垠旷野与深沉的平静', color: '#dcedc2' },
+  { title: '静谧港湾', desc: '远在寻常抵达之外的避世之地', color: '#c3e3f4' },
+  { title: '定制之旅', desc: '依你的心象与灵魂裁剪的旅程', color: '#f0e4c0' },
+  { title: '迷离漂流', desc: '穿过令人屏息的超现实地带', color: '#dcd2f2' },
+  { title: '雾中山脊', desc: '云与神话缠绕的永恒棱线', color: '#f3cdd6' },
+  { title: '深海流光', desc: '未知微光涌动的发光深处', color: '#c3e3f4' },
+  { title: '鎏金暮色', desc: '漫过一切理智的琥珀色地平线', color: '#f0e4c0' },
+  { title: '镜面潮汐', desc: '盛着纯粹静谧天空的止水', color: '#dcedc2' },
 ]
 
 const easeInOut = (t: number) => (t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t)
@@ -157,15 +157,15 @@ function PhotoCard({
         {type === 'play' ? (
           <>
             <PlayCircle size={playSize} iconW={playSize <= 26 ? 8 : 10} iconH={playSize <= 26 ? 10 : 12} />
-            <span style={{ fontFamily: "'Imprima', sans-serif", fontSize: labelSize, color: '#fff', lineHeight: 1.3 }}>
-              View Reel
+            <span style={{ fontFamily: "'Imprima', 'Noto Sans SC', sans-serif", fontSize: labelSize, color: '#fff', lineHeight: 1.3 }}>
+              梦境预告
             </span>
           </>
         ) : (
           <>
             <span
               style={{
-                fontFamily: "'Viaoda Libre', serif",
+                fontFamily: "'Viaoda Libre', 'Noto Serif SC', serif",
                 fontSize: numberSize,
                 color: '#fff',
                 lineHeight: 1,
@@ -174,8 +174,8 @@ function PhotoCard({
             >
               32
             </span>
-            <span style={{ fontFamily: "'Imprima', sans-serif", fontSize: labelSize, color: 'rgba(255,255,255,0.9)' }}>
-              World Patrons
+            <span style={{ fontFamily: "'Imprima', 'Noto Sans SC', sans-serif", fontSize: labelSize, color: 'rgba(255,255,255,0.9)' }}>
+              位入梦旅人
             </span>
           </>
         )}
@@ -257,7 +257,7 @@ function ArcCardSlider({
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontFamily: "'Imprima', sans-serif",
+                  fontFamily: "'Imprima', 'Noto Sans SC', sans-serif",
                   fontSize: 10,
                   color: 'rgba(80,50,60,0.6)',
                 }}
@@ -267,7 +267,7 @@ function ArcCardSlider({
               <div>
                 <h3
                   style={{
-                    fontFamily: "'Viaoda Libre', serif",
+                    fontFamily: "'Viaoda Libre', 'Noto Serif SC', serif",
                     fontSize: isMobile ? 22 : 30,
                     color: '#3a2530',
                     lineHeight: 1.15,
@@ -278,7 +278,7 @@ function ArcCardSlider({
                 </h3>
                 <p
                   style={{
-                    fontFamily: "'Imprima', sans-serif",
+                    fontFamily: "'Imprima', 'Noto Sans SC', sans-serif",
                     fontSize: isMobile ? 12 : 15,
                     color: 'rgba(58,37,48,0.65)',
                     lineHeight: 1.5,
@@ -297,7 +297,7 @@ function ArcCardSlider({
 }
 
 const NAV_LINK_STYLE: React.CSSProperties = {
-  fontFamily: "'Imprima', sans-serif",
+  fontFamily: "'Imprima', 'Noto Sans SC', sans-serif",
   fontSize: 12,
   letterSpacing: '0.12em',
   textTransform: 'uppercase',
@@ -533,10 +533,10 @@ export default function App() {
           }}
         >
           {isMobile ? (
-            <span style={{ ...NAV_LINK_STYLE, fontSize: 11 }}>Explore</span>
+            <span style={{ ...NAV_LINK_STYLE, fontSize: 11 }}>探索</span>
           ) : (
             <div style={{ display: 'flex', gap: 36 }}>
-              {['Worlds', 'Atelier', 'Immersions'].map((l) => (
+              {['航线', '造梦所', '沉浸之旅'].map((l) => (
                 <a key={l} href="#" style={NAV_LINK_STYLE}>
                   {l}
                 </a>
@@ -545,10 +545,10 @@ export default function App() {
           )}
           <StarLogo />
           {isMobile ? (
-            <span style={{ ...NAV_LINK_STYLE, fontSize: 11 }}>Connect</span>
+            <span style={{ ...NAV_LINK_STYLE, fontSize: 11 }}>预约</span>
           ) : (
             <div style={{ display: 'flex', gap: 36 }}>
-              {['Craft', 'Codex', 'Connect'].map((l) => (
+              {['手记', '梦典', '预约'].map((l) => (
                 <a key={l} href="#" style={NAV_LINK_STYLE}>
                   {l}
                 </a>
@@ -583,7 +583,7 @@ export default function App() {
             >
               <h1
                 style={{
-                  fontFamily: "'Viaoda Libre', serif",
+                  fontFamily: "'Viaoda Libre', 'Noto Serif SC', serif",
                   margin: 0,
                   textShadow: '0 2px 24px rgba(0,0,0,0.7), 0 1px 4px rgba(0,0,0,0.9)',
                 }}
@@ -597,7 +597,7 @@ export default function App() {
                     letterSpacing: '0.04em',
                   }}
                 >
-                  FALL <span style={{ color: 'rgba(255,220,180,0.7)', fontSize: '0.8em' }}>›</span> <em>INTO</em>
+                  睡去 <span style={{ color: 'rgba(255,220,180,0.7)', fontSize: '0.8em' }}>›</span> <em>即启程</em>
                 </span>
                 <span
                   style={{
@@ -605,15 +605,15 @@ export default function App() {
                     fontSize: 'clamp(50px, 7.5vw, 88px)',
                     lineHeight: 0.9,
                     color: '#fff',
-                    letterSpacing: '-0.02em',
+                    letterSpacing: '0.06em',
                   }}
                 >
-                  REVERIE
+                  坠入梦境
                 </span>
               </h1>
               <p
                 style={{
-                  fontFamily: "'Imprima', sans-serif",
+                  fontFamily: "'Imprima', 'Noto Sans SC', sans-serif",
                   fontSize: 18,
                   lineHeight: 1.7,
                   color: 'rgba(255,245,235,0.88)',
@@ -623,7 +623,7 @@ export default function App() {
                   textShadow: '0 1px 12px rgba(0,0,0,0.8)',
                 }}
               >
-                Crafting boundless digital worlds where the edge between AI, vision, and living myth dissolves.
+                我们是一家贩卖梦境的旅行社——为清醒得太久的人,定制一场认真做完的梦。
               </p>
             </div>
             <div
@@ -660,7 +660,7 @@ export default function App() {
               transition: 'opacity 0.9s ease 0.3s, transform 0.9s ease 0.3s',
             }}
           >
-            <h1 style={{ fontFamily: "'Viaoda Libre', serif", margin: 0, textAlign: 'center' }}>
+            <h1 style={{ fontFamily: "'Viaoda Libre', 'Noto Serif SC', serif", margin: 0, textAlign: 'center' }}>
               <span
                 style={{
                   display: 'block',
@@ -670,23 +670,23 @@ export default function App() {
                   color: '#3b1a0a',
                 }}
               >
-                FALL <span style={{ color: '#6b2e0e', fontSize: '0.8em' }}>›</span> <em>INTO</em>
+                睡去 <span style={{ color: '#6b2e0e', fontSize: '0.8em' }}>›</span> <em>即启程</em>
               </span>
               <span
                 style={{
                   display: 'block',
                   fontSize: 'clamp(60px, 12vw, 86px)',
-                  letterSpacing: '-0.025em',
+                  letterSpacing: '0.06em',
                   lineHeight: 1,
                   color: '#3b1a0a',
                 }}
               >
-                REVERIE
+                坠入梦境
               </span>
             </h1>
             <p
               style={{
-                fontFamily: "'Imprima', sans-serif",
+                fontFamily: "'Imprima', 'Noto Sans SC', sans-serif",
                 fontSize: 16,
                 maxWidth: 400,
                 color: '#5c2d0e',
@@ -694,7 +694,7 @@ export default function App() {
                 margin: 0,
               }}
             >
-              Crafting boundless digital worlds where the edge between AI, vision, and living myth dissolves.
+              我们是一家贩卖梦境的旅行社——为清醒得太久的人,定制一场认真做完的梦。
             </p>
             <div style={{ display: 'flex', gap: 14 }}>
               <PhotoCard image={CARD_IMAGES[0]} size={140} radius={22} type="play" labelSize={14} numberSize={28} playSize={26} withBlurStrip />
@@ -719,7 +719,7 @@ export default function App() {
               transition: 'opacity 0.9s ease 0.3s, transform 0.9s ease 0.3s',
             }}
           >
-            <h1 style={{ fontFamily: "'Viaoda Libre', serif", margin: 0, textAlign: 'center' }}>
+            <h1 style={{ fontFamily: "'Viaoda Libre', 'Noto Serif SC', serif", margin: 0, textAlign: 'center' }}>
               <span
                 style={{
                   display: 'block',
@@ -729,23 +729,23 @@ export default function App() {
                   color: '#3b1a0a',
                 }}
               >
-                FALL <span style={{ color: '#6b2e0e', fontSize: '0.8em' }}>›</span> <em>INTO</em>
+                睡去 <span style={{ color: '#6b2e0e', fontSize: '0.8em' }}>›</span> <em>即启程</em>
               </span>
               <span
                 style={{
                   display: 'block',
                   fontSize: 'clamp(52px, 16vw, 80px)',
-                  letterSpacing: '-0.025em',
+                  letterSpacing: '0.06em',
                   lineHeight: 1,
                   color: '#3b1a0a',
                 }}
               >
-                REVERIE
+                坠入梦境
               </span>
             </h1>
             <p
               style={{
-                fontFamily: "'Imprima', sans-serif",
+                fontFamily: "'Imprima', 'Noto Sans SC', sans-serif",
                 fontSize: 15,
                 lineHeight: 1.625,
                 maxWidth: 280,
@@ -754,7 +754,7 @@ export default function App() {
                 margin: '16px 0 0',
               }}
             >
-              Crafting boundless digital worlds where the edge between AI, vision, and living myth dissolves.
+              我们是一家贩卖梦境的旅行社——为清醒得太久的人,定制一场认真做完的梦。
             </p>
             <div style={{ marginTop: 24 }}>
               <div
@@ -782,7 +782,7 @@ export default function App() {
                 />
                 <div style={{ position: 'absolute', bottom: 12, left: 12, right: 12, display: 'flex', alignItems: 'center', gap: 8 }}>
                   <PlayCircle size={26} iconW={8} iconH={10} />
-                  <span style={{ fontFamily: "'Imprima', sans-serif", fontSize: 13, color: '#fff' }}>View Reel</span>
+                  <span style={{ fontFamily: "'Imprima', 'Noto Sans SC', sans-serif", fontSize: 13, color: '#fff' }}>梦境预告</span>
                 </div>
               </div>
             </div>
@@ -823,14 +823,14 @@ export default function App() {
             >
               <span
                 style={{
-                  fontFamily: "'Imprima', sans-serif",
+                  fontFamily: "'Imprima', 'Noto Sans SC', sans-serif",
                   fontSize: 10,
                   letterSpacing: '0.22em',
                   textTransform: 'uppercase',
                   color: 'rgba(255,255,255,0.6)',
                 }}
               >
-                DESCEND
+                下 坠
               </span>
               <div
                 style={{
@@ -868,7 +868,7 @@ export default function App() {
           <div style={{ marginTop: isMobile ? '8vh' : '12vh', textAlign: 'center', padding: '0 20px' }}>
             <h2
               style={{
-                fontFamily: "'Viaoda Libre', serif",
+                fontFamily: "'Viaoda Libre', 'Noto Serif SC', serif",
                 fontSize: isMobile ? 'clamp(28px, 8vw, 44px)' : 'clamp(38px, 6.5vw, 78px)',
                 color: '#ffffff',
                 letterSpacing: '0.03em',
@@ -877,11 +877,11 @@ export default function App() {
                 textShadow: '0 2px 20px rgba(0,0,0,0.4)',
               }}
             >
-              FORGE BEYOND THE REAL
+              去现实之外旅行
             </h2>
             <p
               style={{
-                fontFamily: "'Imprima', sans-serif",
+                fontFamily: "'Imprima', 'Noto Sans SC', sans-serif",
                 fontSize: isMobile ? 14 : 20,
                 lineHeight: 1.6,
                 letterSpacing: '-0.01em',
@@ -893,8 +893,7 @@ export default function App() {
                 color: 'rgba(255,255,255,0.82)',
               }}
             >
-              Singular voyages to astonishing destinations, shaped for those who seek beauty beyond the ordinary and the
-              known.
+              九条梦境航线,通往令人屏息的目的地——献给执意在寻常之外寻找美的人。
             </p>
           </div>
         </div>

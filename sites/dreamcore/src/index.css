@@ -14,7 +14,7 @@ body {
 
 body {
   margin: 0;
-  font-family: 'Imprima', sans-serif;
+  font-family: 'Imprima', 'Noto Sans SC', sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
