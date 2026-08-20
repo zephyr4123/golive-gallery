@@ -4,6 +4,7 @@ import pc from 'picocolors'
 import { loadRegistry, type Issue } from '../core/registry.ts'
 import { repoRoot } from '../core/paths.ts'
 import { adapters } from '../adapters/index.ts'
+import { BASE_DOMAIN_CONFIGURED } from '../core/config.ts'
 
 // check = CI 门禁的本地版:两边跑同一份 registry 代码,本地过 = CI 过
 export function checkCommand(): void {
@@ -14,6 +15,10 @@ export function checkCommand(): void {
     if (!fs.existsSync(path.join(repoRoot, adapter.docsLink))) {
       issues.push({ site: `(适配器 ${adapter.target})`, level: 'error', message: `docsLink 指向不存在的教程:${adapter.docsLink}` } satisfies Issue)
     }
+  }
+
+  if (!BASE_DOMAIN_CONFIGURED) {
+    issues.push({ site: '(全仓)', level: 'warn', message: '未配置根域名(GOLIVE_BASE_DOMAIN),当前使用占位值 example.com——复制 .env.example 为 .env 填入你的域名' })
   }
 
   const errors = issues.filter((i) => i.level === 'error')

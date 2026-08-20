@@ -10,7 +10,7 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 ![Status](https://img.shields.io/badge/status-%E6%90%AD%E5%BB%BA%E4%B8%AD-orange)
 
-[在线画廊(建设中)](https://<BASE_DOMAIN>) · [部署教程](docs/) · [站点清单](sites/)
+[部署教程](docs/) · [站点清单](sites/)
 
 </div>
 
@@ -25,7 +25,7 @@
 
 | 档位 | 方式 | 花费 | 难度 | 示范 |
 |---|---|---|---|---|
-| 🆓 免费托管 | GitHub Pages / Vercel / Cloudflare Pages | 0 元 | ⭐~⭐⭐ | `*.<BASE_DOMAIN>` |
+| 🆓 免费托管 | GitHub Pages / Vercel / Cloudflare Pages | 0 元 | ⭐~⭐⭐ | `*.<你的域名>` |
 | 🚇 内网穿透 | Cloudflare Tunnel / cpolar(ngrok 作临时演示) | 0 元起 | ⭐⭐~⭐⭐⭐ | 本机服务 → 公网子域名 |
 | 🏭 工业级 | 云服务器 + 域名 + Caddy + HTTPS | 真金白银 | ⭐⭐⭐⭐+ | VPS 上的完整链路 |
 
@@ -44,6 +44,7 @@ infra/      后厨配方:VPS 的 Caddy 配置、隧道配置模板、DNS 记录(
 ```bash
 git clone <本仓库> && cd golive_gallery
 npm i                  # 安装 golive CLI(需要 Node ≥ 24)
+cp .env.example .env   # 填入你自己的根域名(GOLIVE_BASE_DOMAIN),.env 不进仓库
 npx golive list        # 看看有哪些站
 npx golive check       # 校验站点清单与教程对应关系(CI 跑的就是这条)
 
@@ -56,7 +57,7 @@ npm i && npm run dev   # 与仓库其余部分零耦合
 - **手动路径是正文,CLI 是章末奖励**——教程永远先教手动步骤,`golive deploy --dry-run` 会打印出与教程一致的底层命令;
 - **一份 site.yaml 派生一切**——部署配置、画廊索引、教程互链、CI 校验,都从每站的清单文件生成,人工维护必然漂移;
 - **静态站不上容器**——依赖隔离靠每站独立 node_modules + lockfile;Docker 只在 VPS 教程里作为教学内容出现;
-- **密钥绝不进库**——所有 token 走环境变量,`golive check` 会拦截清单里的疑似凭据。
+- **密钥与私有配置绝不进库**——token 走环境变量,根域名走 .env(`GOLIVE_BASE_DOMAIN`);仓库保持泛化,任何人 fork 后配上自己的域名即可用。
 
 ## License
 

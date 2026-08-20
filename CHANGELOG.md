@@ -17,4 +17,4 @@
 - 对抗性审查修复 14 项(循环锚点防护、Windows 兼容、new 前置校验、退出码语义等)
 
 ### Changed
-- 域名定为 <BASE_DOMAIN>(腾讯云注册),CLI 侧收敛为 `BASE_DOMAIN` 单一常量
+- 根域名收敛为 `BASE_DOMAIN` 单一配置:经 `.env` 的 `GOLIVE_BASE_DOMAIN` 注入,不硬编码进仓库
