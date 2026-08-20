@@ -12,8 +12,13 @@ export function listCommand(options: { json?: boolean }): void {
   const { sites, issues } = loadRegistry()
 
   if (options.json) {
-    // --json 供 CI 生成矩阵与画廊索引消费
+    // --json 供 CI 生成矩阵与画廊索引消费:stdout 保持纯 JSON,异常走 stderr
     console.log(JSON.stringify(sites.map((s) => s.manifest), null, 2))
+    const errorCount = issues.filter((i) => i.level === 'error').length
+    if (errorCount > 0) {
+      console.error(`⚠ 有 ${errorCount} 个校验错误,输出已排除受影响站点,详见 golive check`)
+      process.exitCode = 1
+    }
     return
   }
 

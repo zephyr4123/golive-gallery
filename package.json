@@ -8,15 +8,16 @@
     "node": ">=24"
   },
   "bin": {
-    "golive": "./cli/src/main.ts"
+    "golive": "./cli/bin/golive.js"
   },
   "scripts": {
-    "check": "node cli/src/main.ts check"
+    "check": "node cli/bin/golive.js check"
   },
   "dependencies": {
     "commander": "^14.0.0",
     "execa": "^9.6.0",
     "picocolors": "^1.1.1",
+    "which": "^7.0.0",
     "yaml": "^2.8.0",
     "zod": "^4.0.0"
   }

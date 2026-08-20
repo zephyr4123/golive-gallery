@@ -3,13 +3,20 @@ import { z } from 'zod'
 // site.yaml 的唯一真相源:全仓所有消费方(check/deploy/画廊索引/CI)都从这里取定义。
 // deploy 块是判别联合:每种部署方式只允许携带自己的配置,防止死配置误导读者。
 
+// DNS label 规则:小写字母/数字开头结尾,中间可含连字符,最长 63 字符
+const DNS_LABEL = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/
+const DNS_LABEL_HINT = '须为合法 DNS label:小写字母/数字开头结尾,中间可用连字符,最长 63 字符'
+
+// 子域名保留字:留给项目自身设施,示范站不得占用(new 与 check 共用这一份)
+export const RESERVED_SUBDOMAINS = ['www', 'docs', 'gallery', 'status'] as const
+
 export const TUNNEL_PROVIDERS = ['cloudflared', 'cpolar', 'ngrok'] as const
 
 const deploySchema = z.discriminatedUnion('target', [
   // 免费托管档 —— 注意:GitHub Pages 一个仓库只能承载一个站,全仓至多一个(check 校验)
   z.object({ target: z.literal('github-pages') }),
-  z.object({ target: z.literal('vercel'), project: z.string() }),
-  z.object({ target: z.literal('cloudflare-pages'), project: z.string() }),
+  z.object({ target: z.literal('vercel'), project: z.string().min(1, '平台项目名不能为空') }),
+  z.object({ target: z.literal('cloudflare-pages'), project: z.string().min(1, '平台项目名不能为空') }),
   // 内网穿透档 —— cloudflared/cpolar 可绑自有子域名做长期示范;ngrok 免费档只能临时演示
   z.object({
     target: z.literal('tunnel'),
@@ -19,17 +26,17 @@ const deploySchema = z.discriminatedUnion('target', [
   // 工业级档 —— host 是 ~/.ssh/config 里的别名,真实 IP/用户名不进仓库
   z.object({
     target: z.literal('vps'),
-    host: z.string(),
+    host: z.string().min(1),
     path: z.string().startsWith('/'),
     keepReleases: z.number().int().min(1).default(5),
   }),
 ])
 
 export const siteSchema = z.object({
-  name: z.string().regex(/^[a-z0-9-]+$/, '站点名只允许小写字母、数字、连字符'),
+  name: z.string().regex(DNS_LABEL, `站点名${DNS_LABEL_HINT}`),
   title: z.string().min(1),
   description: z.string().min(1),
-  subdomain: z.string().regex(/^[a-z0-9-]+$/, '子域名只允许小写字母、数字、连字符'),
+  subdomain: z.string().regex(DNS_LABEL, `子域名${DNS_LABEL_HINT}`),
   difficulty: z.number().int().min(1).max(5),
   status: z.enum(['draft', 'building', 'live', 'archived']),
   tags: z.array(z.string()).default([]),

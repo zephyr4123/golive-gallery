@@ -1,8 +1,8 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import YAML from 'yaml'
-import { siteSchema, type SiteManifest } from './schema.ts'
-import { repoRoot, sitesDir } from './paths.ts'
+import { siteSchema, RESERVED_SUBDOMAINS, type SiteManifest } from './schema.ts'
+import { repoRoot, sitesDir, docsDir } from './paths.ts'
 
 export interface Site {
   name: string
@@ -16,17 +16,17 @@ export interface Issue {
   message: string
 }
 
-// 子域名保留字:这些留给项目自身设施,示范站不得占用
-const RESERVED_SUBDOMAINS = ['www', 'docs', 'gallery', 'status']
-
 // 疑似凭据的键名黑名单:site.yaml 只写"什么",凭据一律走环境变量
 const SECRET_KEY_PATTERN = /token|secret|password|authtoken|apikey|api_key|credential/i
 
-function findSecretKeys(node: unknown, trail: string[], hits: string[]): void {
+// seen 护栏:YAML 锚点别名可以构造循环引用对象,无护栏递归会栈溢出炸掉整个门禁
+function findSecretKeys(node: unknown, trail: string[], hits: string[], seen = new WeakSet<object>()): void {
   if (node === null || typeof node !== 'object') return
+  if (seen.has(node)) return
+  seen.add(node)
   for (const [key, value] of Object.entries(node as Record<string, unknown>)) {
     if (SECRET_KEY_PATTERN.test(key)) hits.push([...trail, key].join('.'))
-    findSecretKeys(value, [...trail, key], hits)
+    findSecretKeys(value, [...trail, key], hits, seen)
   }
 }
 
@@ -39,45 +39,66 @@ export function loadRegistry(): { sites: Site[]; issues: Issue[] } {
   if (!fs.existsSync(sitesDir)) return { sites, issues }
 
   for (const entry of fs.readdirSync(sitesDir, { withFileTypes: true })) {
-    if (!entry.isDirectory() || entry.name.startsWith('.') || entry.name.startsWith('_')) continue
+    if (entry.name.startsWith('.') || entry.name.startsWith('_')) continue
     const dir = path.join(sitesDir, entry.name)
-    const manifestPath = path.join(dir, 'site.yaml')
 
-    if (!fs.existsSync(manifestPath)) {
-      issues.push({ site: entry.name, level: 'error', message: '缺少 site.yaml' })
+    // 符号链接跟随判定;非目录条目(文件/断链)出 warn 而不是静默消失——
+    // 静默跳过的站点会逃过子域名冲突等全部校验,那是门禁的漏洞不是宽容
+    let isDir = entry.isDirectory()
+    if (entry.isSymbolicLink()) {
+      const stat = fs.statSync(dir, { throwIfNoEntry: false })
+      isDir = stat?.isDirectory() ?? false
+    }
+    if (!isDir) {
+      issues.push({ site: entry.name, level: 'warn', message: 'sites/ 下的非目录条目(文件或悬空链接)被忽略' })
       continue
     }
 
-    let raw: unknown
+    // 单站的任何异常都收敛为该站的 issue,不许击穿其余站点的校验
     try {
-      raw = YAML.parse(fs.readFileSync(manifestPath, 'utf8'))
+      loadOneSite(entry.name, dir, sites, issues)
     } catch (err) {
-      issues.push({ site: entry.name, level: 'error', message: `site.yaml 解析失败:${(err as Error).message}` })
-      continue
+      issues.push({ site: entry.name, level: 'error', message: `处理失败:${(err as Error).message}` })
     }
-
-    const secretHits: string[] = []
-    findSecretKeys(raw, [], secretHits)
-    for (const hit of secretHits) {
-      issues.push({ site: entry.name, level: 'error', message: `site.yaml 出现疑似凭据字段「${hit}」——凭据一律走环境变量,清单里只登记键名` })
-    }
-
-    const parsed = siteSchema.safeParse(raw)
-    if (!parsed.success) {
-      for (const zi of parsed.error.issues) {
-        issues.push({ site: entry.name, level: 'error', message: `${zi.path.join('.') || '(根)'}: ${zi.message}` })
-      }
-      continue
-    }
-
-    if (parsed.data.name !== entry.name) {
-      issues.push({ site: entry.name, level: 'error', message: `name(${parsed.data.name})与目录名不一致` })
-    }
-    sites.push({ name: entry.name, dir, manifest: parsed.data })
   }
 
   crossValidate(sites, issues)
   return { sites, issues }
+}
+
+function loadOneSite(name: string, dir: string, sites: Site[], issues: Issue[]): void {
+  const manifestPath = path.join(dir, 'site.yaml')
+  if (!fs.existsSync(manifestPath)) {
+    issues.push({ site: name, level: 'error', message: '缺少 site.yaml' })
+    return
+  }
+
+  let raw: unknown
+  try {
+    raw = YAML.parse(fs.readFileSync(manifestPath, 'utf8'))
+  } catch (err) {
+    issues.push({ site: name, level: 'error', message: `site.yaml 解析失败:${(err as Error).message}` })
+    return
+  }
+
+  const secretHits: string[] = []
+  findSecretKeys(raw, [], secretHits)
+  for (const hit of secretHits) {
+    issues.push({ site: name, level: 'error', message: `site.yaml 出现疑似凭据字段「${hit}」——凭据一律走环境变量,清单里只登记键名` })
+  }
+
+  const parsed = siteSchema.safeParse(raw)
+  if (!parsed.success) {
+    for (const zi of parsed.error.issues) {
+      issues.push({ site: name, level: 'error', message: `${zi.path.join('.') || '(根)'}: ${zi.message}` })
+    }
+    return
+  }
+
+  if (parsed.data.name !== name) {
+    issues.push({ site: name, level: 'error', message: `name(${parsed.data.name})与目录名不一致` })
+  }
+  sites.push({ name, dir, manifest: parsed.data })
 }
 
 function crossValidate(sites: Site[], issues: Issue[]): void {
@@ -87,7 +108,7 @@ function crossValidate(sites: Site[], issues: Issue[]): void {
   for (const site of sites) {
     const m = site.manifest
 
-    if (RESERVED_SUBDOMAINS.includes(m.subdomain)) {
+    if ((RESERVED_SUBDOMAINS as readonly string[]).includes(m.subdomain)) {
       issues.push({ site: site.name, level: 'error', message: `子域名「${m.subdomain}」是保留字(${RESERVED_SUBDOMAINS.join('/')})` })
     }
     const owner = subdomainOwner.get(m.subdomain)
@@ -116,6 +137,18 @@ function crossValidate(sites: Site[], issues: Issue[]): void {
   // GitHub Pages 硬限制:一个仓库只能承载一个 Pages 站、绑一个自定义域
   if (githubPagesCount > 1) {
     issues.push({ site: '(全仓)', level: 'error', message: `github-pages 站点有 ${githubPagesCount} 个,但一个仓库只能承载一个 Pages 站` })
+  }
+
+  // 反向对应:docs/sites/ 下的每篇教程必须被某个站点引用——"一一对应"是双向承诺
+  const referenced = new Set(sites.map((s) => path.resolve(repoRoot, s.manifest.docs)))
+  const docsSitesDir = path.join(docsDir, 'sites')
+  if (fs.existsSync(docsSitesDir)) {
+    for (const file of fs.readdirSync(docsSitesDir)) {
+      if (!file.endsWith('.md')) continue
+      if (!referenced.has(path.resolve(docsSitesDir, file))) {
+        issues.push({ site: '(全仓)', level: 'error', message: `孤儿教程:docs/sites/${file} 没有任何站点引用` })
+      }
+    }
   }
 }
 

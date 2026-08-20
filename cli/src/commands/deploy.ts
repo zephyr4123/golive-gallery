@@ -28,9 +28,10 @@ export function deployCommand(name: string, options: { dryRun?: boolean }): void
   for (const line of adapter.plan(site)) console.log(`  ${line.startsWith('#') ? pc.dim(line) : line}`)
   console.log(pc.dim(`\n教程:${adapter.docsLink}\n`))
 
+  // dry-run 与否,preflight 失败都以非零退出码告知——退出码语义只有一套
+  if (failed) process.exitCode = 1
   if (options.dryRun) return
 
   // 骨架阶段:真实执行随各站点落地时实现——有真实用例才写代码
   console.log(pc.yellow('⚠ 自动执行尚未实现(骨架阶段)。请按上方命令手动执行,或按教程操作。'))
-  process.exitCode = failed ? 1 : 0
 }

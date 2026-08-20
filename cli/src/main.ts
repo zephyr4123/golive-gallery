@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 import { Command } from 'commander'
 import pc from 'picocolors'
 import { listCommand } from './commands/list.ts'

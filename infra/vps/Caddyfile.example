@@ -2,8 +2,8 @@
 # 每站一个 site block,root 指向 current 符号链接(发布 = 切链接,回滚 = 切回去)
 # HTTPS 证书由 Caddy 内置 ACME 自动签发续期(per-host HTTP-01),零配置零 cron
 
-team.<BASE_DOMAIN> {
-	root * /srv/sites/team/current
+<SUBDOMAIN>.<BASE_DOMAIN> {
+	root * /srv/sites/<SITE>/current
 	file_server
 	encode gzip
 }

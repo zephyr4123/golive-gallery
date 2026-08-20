@@ -5,12 +5,12 @@ import { commandExists } from '../core/exec.ts'
 // 这里的 plan 给出的是等价的 CLI 手动路径,供 --dry-run 教学对照。
 export const vercelAdapter: DeployAdapter = {
   target: 'vercel',
-  docsLink: 'docs/guide/01-free-hosting/vercel.md',
+  docsLink: 'docs/guide/01-free-hosting/README.md',
   preflight(site) {
     return [
       { ok: commandExists('vercel'), label: 'vercel CLI 已安装', hint: 'npm i -g vercel,或走平台 Git 集成(推荐,见教程)' },
       { ok: Boolean(process.env.VERCEL_TOKEN), label: '环境变量 VERCEL_TOKEN 已配置', hint: '平台 Git 集成模式下本地无需 token' },
-      { ok: site.manifest.deploy.target === 'vercel', label: `平台项目名:${(site.manifest.deploy as { project?: string }).project ?? '(未配置)'}` },
+      { ok: Boolean((site.manifest.deploy as { project?: string }).project), label: `平台项目名:${(site.manifest.deploy as { project?: string }).project ?? '(未配置)'}`, hint: '在 site.yaml 的 deploy.project 填平台项目名' },
     ]
   },
   plan(site) {

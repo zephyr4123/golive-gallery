@@ -7,6 +7,6 @@ tunnel: <TUNNEL_ID>
 credentials-file: ~/.cloudflared/<TUNNEL_ID>.json
 
 ingress:
-  - hostname: home.<BASE_DOMAIN>
+  - hostname: <SUBDOMAIN>.<BASE_DOMAIN> # 填你站点 site.yaml 的 subdomain,并先在 infra/dns/records.md 登记
     service: http://localhost:4173
   - service: http_status:404
