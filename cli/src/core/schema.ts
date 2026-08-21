@@ -46,7 +46,8 @@ export const siteSchema = z.object({
   source: z
     .object({
       generator: z.enum(['motionsites', 'custom']),
-      promptId: z.string().optional(),
+      // 一个站可能由多个 prompt 拼装(区块家族 + 补充区块),所以既收单个也收数组
+      promptId: z.union([z.string(), z.array(z.string()).min(1)]).optional(),
       // 资产形态登记(纯溯源):cdn = 直用素材方 CDN(MotionSites 会员协议允许,且不撑大仓库);
       // localized = 已下载进本站 public/;none = 无外部资产
       assets: z.enum(['localized', 'cdn', 'none']).default('none'),

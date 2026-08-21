@@ -1,0 +1,42 @@
+@import 'tailwindcss';
+
+/* 设计系统的两支字体:Barlow 走全部 UI 文本,Instrument Serif 斜体只做点睛短语 */
+@theme {
+  --font-sans: 'Barlow', ui-sans-serif, system-ui, sans-serif;
+  --font-accent: 'Instrument Serif', serif;
+  --color-harvest: #27bd09;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scrollbar-gutter: stable;
+  scroll-behavior: auto;
+}
+
+body {
+  margin: 0;
+  background: #000;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 键盘可达性:设计系统全靠细分隔线,默认 outline 在黑底上看不见 */
+:focus-visible {
+  outline: 2px solid var(--color-harvest);
+  outline-offset: 3px;
+}
+
+/* 跑马灯:轨道是内容的两份,移动一份宽度(-50%)正好回到起点 */
+@keyframes marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
