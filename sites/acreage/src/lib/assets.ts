@@ -16,6 +16,14 @@ export const assets = {
     valid: `${ACREAGE_CDN}/tick-circle.svg`,
     invalid: `${ACREAGE_CDN}/close-circle.svg`,
   },
+  /** 跑马灯字标,顺序照原页面 */
+  logos: [
+    { name: 'Canva', src: `${ACREAGE_CDN}/canva-logo-svg-150px.svg` },
+    { name: 'Voiceflow', src: `${ACREAGE_CDN}/voiceflow-logo-svg-150px.svg` },
+    { name: 'Zendesk', src: `${ACREAGE_CDN}/zendesk-logo-svg-150px.svg` },
+    { name: 'Pendo', src: `${ACREAGE_CDN}/pendo-logo-svg-150px.svg` },
+    { name: 'Glide', src: `${ACREAGE_CDN}/glide-logo-svg-150px.svg` },
+  ],
 } as const
 
 /** 品牌标记:三角山形,既做 logo 也做视频遮罩 */
