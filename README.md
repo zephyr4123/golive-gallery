@@ -8,7 +8,8 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
-![Status](https://img.shields.io/badge/status-%E6%90%AD%E5%BB%BA%E4%B8%AD-orange)
+[![Release](https://img.shields.io/github/v/release/zephyr4123/golive-gallery?label=release&color=blue)](https://github.com/zephyr4123/golive-gallery/releases)
+![Status](https://img.shields.io/badge/status-%E9%A6%96%E7%AB%99%E5%B7%B2%E4%B8%8A%E7%BA%BF-brightgreen)
 
 [🖼 已上线站点](#-已上线站点) · [部署教程](docs/) · [站点清单](sites/)
 
