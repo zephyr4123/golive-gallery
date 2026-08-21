@@ -1,0 +1,31 @@
+# acreage —— 站点唯一真相源:部署、画廊索引、教程互链、CI 校验都从这份清单派生
+# 字段定义见 cli/src/core/schema.ts;校验:npx golive check
+name: acreage
+title: Acreage
+description: Acreage——精准农业收割服务公司(英文站):单页锚点站,由 MotionSites 五个 prompt 拼装;示范 Cloudflare Pages 部署
+subdomain: acreage # => acreage.golive-gallery.art
+difficulty: 2 # 1-5,驱动画廊排序与学习路线
+status: building # draft | building | live | archived(live 前先把教程写完)
+tags: [深浅交替, 视频背景, 跑马灯, 表单校验, react]
+
+source: # 素材溯源;prompt 原文是付费资产只记编号;资产直用素材方 CDN 时标 assets: cdn
+  generator: motionsites
+  # 一页由五个 prompt 拼成:整页规格 + 四个区块
+  promptId:
+    - acreage-farming-hero # 整页规格:dark/light 交替、视频首屏、数字、跑马灯、服务卡
+    - arceage-stats # 数字区(黑底)
+    - arceage-services # 服务区(全幅田野图)
+    - arceage-testimonial # 证言轮播(覆写为白底)
+    - arceage-contact-us # 表单 + 逐字校验图标(覆写为白底)
+  assets: cdn
+
+build:
+  command: npm run build
+  output: dist
+
+deploy:
+  target: cloudflare-pages # 一个 CF 账号可挂多个 Pages 项目,不像 GitHub Pages 一仓一站
+  project: golive-acreage
+
+docs: docs/sites/acreage.md
+availability: always
