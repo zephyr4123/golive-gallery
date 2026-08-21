@@ -3,6 +3,7 @@ import { ArrowRight } from 'lucide-react'
 import Typewriter from './Typewriter'
 import { assets } from '../lib/assets'
 import { scrollToSection } from '../lib/scroll'
+import { BrandMark } from './SiteNav'
 
 /**
  * 首屏 —— 结构照 Acreage Farming 落地页:全幅视频背景、左下大标题(点睛短语走
@@ -36,6 +37,21 @@ export default function Hero() {
         {/* 底部压深保证白字可读;上半留亮,不把画面糊掉 */}
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/45 to-transparent" />
       </div>
+
+      {/* 品牌锁定件:与导航胶囊同一水平线,靠左。
+          官方胶囊中央只有三角标,不带字标 —— 光一个图形没人知道公司叫什么,
+          所以字标单独放这儿,既让首屏就报出名字,又不破坏胶囊的居中对称。
+          移动端不放:那边的胶囊里已经带了字标。 */}
+      <motion.div
+        {...rise}
+        transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
+        className="pointer-events-none absolute inset-x-0 top-4 z-20 hidden h-11 items-center px-6 md:flex md:px-12 lg:px-[120px]"
+      >
+        <span className="flex items-center gap-3 text-white drop-shadow-[0_1px_8px_rgba(0,0,0,0.6)]">
+          <BrandMark className="h-7 w-7" />
+          <span className="text-xl font-medium tracking-tight">Acreage</span>
+        </span>
+      </motion.div>
 
       <div className="relative z-10 w-full px-6 pb-8 pt-32 md:px-12 lg:px-[120px]">
         <div className="mx-auto grid w-full max-w-[1440px] items-end gap-10 lg:grid-cols-[1.75fr_1fr] lg:gap-20">
