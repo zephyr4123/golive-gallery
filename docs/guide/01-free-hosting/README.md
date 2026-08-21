@@ -1,6 +1,9 @@
 # 01 · 免费托管
 
-TODO:三家免费平台的原理与通用步骤。计划内容与要点(动工前已核实):
-- **GitHub Pages**(github-pages.md):硬限制——一个仓库只能一个站、绑一个自定义域,本仓只保留一个示范站
-- **Vercel**(vercel.md):Hobby 档仅限非商业用途;monorepo 子目录用 Root Directory 指定
-- **Cloudflare Pages**(cloudflare-pages.md):规模化默认档,免费档每项目 100 个自定义域;域名 DNS 托管在 Cloudflare 时接入最顺
+一分钱不花,把静态网站放上公网、绑上自己的域名、带 HTTPS。本目录按"先跑通、再讲究"的顺序读:
+
+1. **[GitHub Pages](github-pages.md)** —— 零成本起步:仓库即站点,push 即部署。本项目第一个示范站(Reverie)走的就是这条链路
+2. **[自定义域名与 Cloudflare 解析](custom-domain-cloudflare.md)** —— 买自己的域名,把解析托管到 Cloudflare,免费拿到边缘 HTTPS。含本项目实测的缓存心法与 NS 修改指北
+3. Vercel / Cloudflare Pages —— 待写(后续示范站会用到;平台硬事实先记着:Vercel Hobby 仅限非商业用途;CF Pages 免费档每项目 100 个自定义域,规模化首选)
+
+平台硬限制备忘(动手前先知道,省得返工):**GitHub Pages 一个仓库只能承载一个站点、绑一个自定义域名**——所以本仓库把唯一的 Pages 名额给了旗舰示范站,其余站点走别的平台。

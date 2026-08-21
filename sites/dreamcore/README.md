@@ -82,4 +82,4 @@ npm run preview           # 预览构建产物
 
 ## 元数据
 
-站点清单(部署目标、子域名、素材溯源)见 [`site.yaml`](site.yaml);对应部署教程见 [`docs/sites/dreamcore.md`](../../docs/sites/dreamcore.md)。
+站点清单(部署目标、子域名、素材溯源)见 [`site.yaml`](site.yaml);从 0 到上线的完整实战教程(含 MCP 组合建站法)见 [`docs/sites/dreamcore.md`](../../docs/sites/dreamcore.md)。
