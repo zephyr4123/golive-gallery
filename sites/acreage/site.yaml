@@ -5,7 +5,7 @@ title: Acreage
 description: Acreage——精准农业收割服务公司(英文站):单页锚点站,由 MotionSites 五个 prompt 拼装;示范 Cloudflare Pages 部署
 subdomain: acreage # => acreage.golive-gallery.art
 difficulty: 2 # 1-5,驱动画廊排序与学习路线
-status: building # draft | building | live | archived(live 前先把教程写完)
+status: live # draft | building | live | archived(live 前先把教程写完)
 tags: [深浅交替, 视频背景, 跑马灯, 表单校验, react]
 
 source: # 素材溯源;prompt 原文是付费资产只记编号;资产直用素材方 CDN 时标 assets: cdn

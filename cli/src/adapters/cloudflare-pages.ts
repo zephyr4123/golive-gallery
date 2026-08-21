@@ -5,7 +5,7 @@ import { commandExists } from '../core/exec.ts'
 // 且域名 DNS 托管在 Cloudflare 时接入最顺)。
 export const cloudflarePagesAdapter: DeployAdapter = {
   target: 'cloudflare-pages',
-  docsLink: 'docs/guide/01-free-hosting/README.md',
+  docsLink: 'docs/guide/01-free-hosting/cloudflare-pages.md',
   preflight(site) {
     return [
       { ok: commandExists('wrangler'), label: 'wrangler CLI 已安装', hint: 'npm i -g wrangler,或走平台 Git 集成' },
