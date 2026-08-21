@@ -5,7 +5,7 @@ title: Reverie
 description: Reverie——贩卖梦境的旅行社(英文站):传送门穿越 + 九条梦境航线,多页面 SPA;示范 GitHub Pages 部署
 subdomain: dreamcore # => dreamcore.golive-gallery.art
 difficulty: 1 # 1-5,驱动画廊排序与学习路线
-status: building # draft | building | live | archived(live 前先把教程写完)
+status: live # draft | building | live | archived(live 前先把教程写完)
 tags: [沉浸式, 滚动叙事, 视差, react]
 
 source: # 素材溯源;prompt 原文是付费资产只记编号;资产直用素材方 CDN 时标 assets: cdn
