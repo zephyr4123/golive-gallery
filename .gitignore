@@ -12,6 +12,10 @@ CLAUDE.md
 CLAUDE.local.md
 AGENTS.md
 
+# 浏览器验证产物(Playwright MCP 的快照/截图,只服务于当次验证)
+.playwright-mcp/
+*-check.png
+
 # 系统杂物
 .DS_Store
 *.log

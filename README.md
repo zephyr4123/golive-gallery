@@ -10,7 +10,7 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 ![Status](https://img.shields.io/badge/status-%E6%90%AD%E5%BB%BA%E4%B8%AD-orange)
 
-[🌐 在线示范:Reverie](https://dreamcore.golive-gallery.art) · [部署教程](docs/) · [站点清单](sites/)
+[🖼 已上线站点](#-已上线站点) · [部署教程](docs/) · [站点清单](sites/)
 
 </div>
 
@@ -28,6 +28,16 @@
 | 🆓 免费托管 | GitHub Pages / Vercel / Cloudflare Pages | 0 元 | ⭐~⭐⭐ | [dreamcore ✅ 已上线](https://dreamcore.golive-gallery.art) |
 | 🚇 内网穿透 | Cloudflare Tunnel / cpolar(ngrok 作临时演示) | 0 元起 | ⭐⭐~⭐⭐⭐ | 本机服务 → 公网子域名 |
 | 🏭 工业级 | 云服务器 + 域名 + Caddy + HTTPS | 真金白银 | ⭐⭐⭐⭐+ | VPS 上的完整链路 |
+
+## 🖼 已上线站点
+
+**点站名直接进站**;右边三列回答"它是怎么上去的"。
+
+| 站点 | 看点 | 部署档位 | 难度 | 上线教程 | 源码 |
+|---|---|---|---|---|---|
+| **[Reverie ↗](https://dreamcore.golive-gallery.art)**<br><sub>贩卖梦境的旅行社</sub> | 传送门穿越动效、九条梦境航线,滚动叙事多页 SPA | 🆓 GitHub Pages + Cloudflare 免费 HTTPS | ⭐ | [dreamcore 实战](docs/sites/dreamcore.md) | [`sites/dreamcore`](sites/dreamcore) |
+
+> 内网穿透档与工业级档的示范站在建。本表登记的是各站 `site.yaml` 里 `status: live` 的站点,机器可读的完整清单跑 `npx golive list`。
 
 ## 仓库结构
 
