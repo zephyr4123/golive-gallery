@@ -1,6 +1,6 @@
 {
   "name": "golive-gallery",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "description": "高审美网站示范 × 三档部署教学",
   "type": "module",
