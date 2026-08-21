@@ -1,6 +1,7 @@
 # 依赖与构建产物
 node_modules/
 dist/
+*.tsbuildinfo
 
 # 本地环境与密钥(真值绝不进库,.env.example 作占位清单)
 .env

@@ -58,18 +58,20 @@
 
 于是「挑一个抄下来」变成了「**检索 → 读规格 → 判断 → 组合**」。本仓库两个站,恰好是这套方法的两个相反方向。
 
-### 实证一:1 个 prompt,摊成 8 页
+### 实证一:1 份全文规格 + 7 条只看元数据的基底,摊成 8 页
 
 `dreamcore-landing` 是一份规格极密的整页 prompt,照它实现出来是个很漂亮的落地页——但也就一页。**滚是能滚,导航点不动、卡片点不动,像一张纸。**
 
-补页面的办法不是回库里再挑几个抄,而是让 AI 带着「这个站还缺什么」去检索:
+补页面的办法不是回库里再挑几个抄下来,而是让 AI 带着「这个站还缺什么」去检索,**每个新页面从检索结果里挑定一条 prompt 作视觉基底**:
 
 ```
-search_prompts("gallery grid showcase collection detail cards elegant")  ← 目录页与详情卡怎么做
-search_prompts("booking contact form elegant minimal luxury travel")     ← 预约表单页怎么做
+search_prompts("gallery grid showcase collection detail cards elegant")  → orbis-cards / editorial-collection-cta …
+search_prompts("booking contact form elegant minimal luxury travel")     → arceage-contact-us …
 ```
 
-注意 `search_prompts` **只返回元数据,不返回正文**——但这已经够了。检索结果告诉 AI:库里存在哪些页面类型、什么风格能和主站配得上。剩下的在主 prompt 那套设计系统(字体、配色、动效语汇)上扩展。最终 **8 个页面、9 条路由、全站零死链**,而 `get_prompt` 全程只调用过一次。
+关键在于:`search_prompts` **只返回元数据**(标题、分类、预览图、相关度),不返回正文——**而这已经够定风格方向了**。七条基底一条都没拉全文,真正进上下文的完整规格只有主 prompt 那一份;各页在它那套设计系统(同一块底色、同一组点缀色、同一对字体、同一种文案 voice)上统一改造,基底各不相同、成品像一家人。
+
+最终 **8 个页面、9 条路由、全站零死链**,`get_prompt` 全程只调用过一次。八页与各自基底的对照表见 [站点 README](sites/dreamcore/README.md#页面与视觉基底)。
 
 ### 实证二:5 个 prompt,收成 1 页
 

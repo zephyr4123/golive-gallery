@@ -10,7 +10,16 @@ tags: [沉浸式, 滚动叙事, 视差, react]
 
 source: # 素材溯源;prompt 原文是付费资产只记编号;资产直用素材方 CDN 时标 assets: cdn
   generator: motionsites
-  promptId: dreamcore-landing
+  # 主 prompt 拉了全文;其余七条只用检索返回的元数据定视觉基底,未拉全文
+  promptId:
+    - dreamcore-landing        # 主页(唯一拉过全文的一份)
+    - orbis-cards              # /voyages 航线目录
+    - editorial-collection-cta # /voyages/:slug 航线详情
+    - arceage-contact-us       # /reserve 预约表单
+    - gateway-portal           # /immersions 沉浸之旅
+    - blog-showcase            # /journal 旅人手记
+    - bento-grid-stats         # /codex 梦典
+    - immersive-studio         # /atelier 造梦所
   assets: cdn
 
 build:

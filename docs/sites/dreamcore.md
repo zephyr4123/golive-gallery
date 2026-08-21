@@ -41,7 +41,9 @@ flowchart LR
 
 ### 5. 逐页配基底:按视觉风格检索,统一改造
 
-对每个新页面,用 `search_prompts` **按视觉风格描述**检索(它按设计风格排序,"booking form elegant minimal luxury" 这类查询很好使),每页选一条 prompt 作视觉基底,然后统一改造:同一块底色、同一组点缀色、同一对字体、同一种文案 voice。基底各不相同,成品像一家人。本站八页与基底的对照表见[站点 README](../../sites/dreamcore/README.md)。
+对每个新页面,用 `search_prompts` **按视觉风格描述**检索(它按设计风格排序,"booking form elegant minimal luxury" 这类查询很好使),每页选一条 prompt 作视觉基底,然后统一改造:同一块底色、同一组点缀色、同一对字体、同一种文案 voice。基底各不相同,成品像一家人。本站八页与基底的对照表见[站点 README](../../sites/dreamcore/README.md#页面与视觉基底)。
+
+**这一步的成本比看上去低得多**:七条基底**一条都没拉全文**。`search_prompts` 返回的标题、分类、预览图、相关度已经足够定风格方向,真正进上下文的完整规格只有主 prompt 那一份(`get_prompt` 全站只调用过一次)。想给八个页面各配一条基底,不必把八份规格都塞进上下文。
 
 ### 6. 交互闭环:所有路汇入一个收口
 
