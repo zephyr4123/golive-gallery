@@ -10,7 +10,7 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 ![Status](https://img.shields.io/badge/status-%E6%90%AD%E5%BB%BA%E4%B8%AD-orange)
 
-[部署教程](docs/) · [站点清单](sites/)
+[🌐 在线示范:Reverie](https://dreamcore.golive-gallery.art) · [部署教程](docs/) · [站点清单](sites/)
 
 </div>
 
@@ -25,7 +25,7 @@
 
 | 档位 | 方式 | 花费 | 难度 | 示范 |
 |---|---|---|---|---|
-| 🆓 免费托管 | GitHub Pages / Vercel / Cloudflare Pages | 0 元 | ⭐~⭐⭐ | `*.<你的域名>` |
+| 🆓 免费托管 | GitHub Pages / Vercel / Cloudflare Pages | 0 元 | ⭐~⭐⭐ | [dreamcore ✅ 已上线](https://dreamcore.golive-gallery.art) |
 | 🚇 内网穿透 | Cloudflare Tunnel / cpolar(ngrok 作临时演示) | 0 元起 | ⭐⭐~⭐⭐⭐ | 本机服务 → 公网子域名 |
 | 🏭 工业级 | 云服务器 + 域名 + Caddy + HTTPS | 真金白银 | ⭐⭐⭐⭐+ | VPS 上的完整链路 |
 
@@ -57,7 +57,7 @@ npm i && npm run dev   # 与仓库其余部分零耦合
 - **手动路径是正文,CLI 是章末奖励**——教程永远先教手动步骤,`golive deploy --dry-run` 会打印出与教程一致的底层命令;
 - **一份 site.yaml 派生一切**——部署配置、画廊索引、教程互链、CI 校验,都从每站的清单文件生成,人工维护必然漂移;
 - **静态站不上容器**——依赖隔离靠每站独立 node_modules + lockfile;Docker 只在 VPS 教程里作为教学内容出现;
-- **密钥与私有配置绝不进库**——token 走环境变量,根域名走 .env(`GOLIVE_BASE_DOMAIN`);仓库保持泛化,任何人 fork 后配上自己的域名即可用。
+- **配置注入,仓库泛化**——token 走环境变量,根域名走 .env(`GOLIVE_BASE_DOMAIN`),任何人 fork 后配上自己的域名即可用;本仓库的官方示范实例部署在 golive-gallery.art,各站在线地址见站点清单。
 
 ## License
 
