@@ -52,7 +52,7 @@ push 到 main(且命中 paths 过滤)即自动部署;也可在 Actions 页手动
 |---|---|---|
 | `dreamcore` | CNAME | `<用户名>.github.io` |
 
-**为什么记录值不带仓库名?**这是每个人第一次绑域名都会卡住的问题:DNS 的 CNAME 只能指向域名,指不了路径([模型二](../00-basics/README.md))。真正的分流靠 Host 头——访客带着 `dreamcore.<BASE_DOMAIN>` 到达 GitHub 边缘,GitHub 查"哪个仓库登记了这个域名"(就是第 1 步填的那格),回的自然是那个仓库的站。以后再加十个项目站,CNAME 记录值全都是 `<用户名>.github.io`,靠各自仓库的登记互相区分。
+**为什么记录值不带仓库名**?这是每个人第一次绑域名都会卡住的问题:DNS 的 CNAME 只能指向域名,指不了路径([模型二](../00-basics/README.md))。真正的分流靠 Host 头——访客带着 `dreamcore.<BASE_DOMAIN>` 到达 GitHub 边缘,GitHub 查"哪个仓库登记了这个域名"(就是第 1 步填的那格),回的自然是那个仓库的站。以后再加十个项目站,CNAME 记录值全都是 `<用户名>.github.io`,靠各自仓库的登记互相区分。
 
 **顺序建议:先把 DNS 记录加好、确认能解析,再去 GitHub 填 Custom domain**——GitHub 会在你填的时刻验证域名,DNS 还没就绪会导致验证失败。
 

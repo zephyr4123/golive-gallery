@@ -1,6 +1,7 @@
 # Reverie(dreamcore.<BASE_DOMAIN>)
 
-> 🌐 在线示范:**https://dreamcore.golive-gallery.art**(本仓库官方实例;教程正文用 `<BASE_DOMAIN>` 占位,fork 后换成你的域名)
+> 🌐 在线示范:**[dreamcore.golive-gallery.art](https://dreamcore.golive-gallery.art)**(本仓库官方实例;教程正文用 `<BASE_DOMAIN>` 占位,fork 后换成你的域名)
+>
 > 站点:[`sites/dreamcore`](../../sites/dreamcore) · 部署:GitHub Pages + Cloudflare 解析 · 素材:MotionSites prompt 库
 >
 > 本篇是第一个示范站从 0 到上线的完整实战。通用原理不重复,随文引用 [00 · 基础](../guide/00-basics/README.md)、[GitHub Pages 篇](../guide/01-free-hosting/github-pages.md)、[Cloudflare 解析篇](../guide/01-free-hosting/custom-domain-cloudflare.md)。

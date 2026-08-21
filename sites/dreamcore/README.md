@@ -6,7 +6,7 @@
 
 | 项 | 值 |
 |---|---|
-| 在线地址 | **https://dreamcore.golive-gallery.art**(官方实例;子域名模式 `dreamcore.<BASE_DOMAIN>`,根域名经 `.env` 注入) |
+| 在线地址 | **[dreamcore.golive-gallery.art](https://dreamcore.golive-gallery.art)**(官方实例;子域名模式 `dreamcore.<BASE_DOMAIN>`,根域名经 `.env` 注入) |
 | 部署方式 | GitHub Pages(`.github/workflows/deploy-pages.yml`,push 即发布) |
 | 技术栈 | React 18 · TypeScript · Vite · Tailwind CSS v4(`@tailwindcss/vite`)· react-router(Hash 路由) |
 | 设计来源 | [MotionSites](https://motionsites.ai) prompt 库:主页基于 `dreamcore-landing`,七个子页各以一条 prompt 为视觉基底(见下表),统一改造成 Reverie 主题 |

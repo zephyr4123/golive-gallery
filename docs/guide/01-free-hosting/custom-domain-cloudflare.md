@@ -33,7 +33,7 @@
 
 ## 三、改 NS:入口在哪(实测踩坑)
 
-**这是最容易走错门的一步。**腾讯云有两个长得很像的控制台:
+**这是最容易走错门的一步**。腾讯云有两个长得很像的控制台:
 
 - ❌ **DNSPod 控制台 / 记录管理**——这里管"解析成什么"(加 A/CNAME 记录的地方),**改不了 NS**
 - ✅ **域名注册控制台**(`console.cloud.tencent.com/domain`)→ 我的域名 → 该域名「**管理**」→ 「DNS 解析」卡片 → **修改 DNS 服务器** → 选「**使用非腾讯云 DNS**」→ 填入 CF 的两条 NS → 提交
@@ -79,7 +79,7 @@ DNS 是层层缓存的系统,每一层各有各的过期钟:
 
 由此得出的行为准则:
 
-1. **等待是操作的一部分。**注册局查询(`dig @a.nic.art`)显示已生效、公共解析器还是旧值——什么都不用做,泡杯茶
+1. **等待是操作的一部分**。注册局查询(`dig @a.nic.art`)显示已生效、公共解析器还是旧值——什么都不用做,泡杯茶
 2. 层与层结论矛盾时(手机能开、电脑打不开;curl 200、浏览器 404),**先怀疑缓存分层,不要急着改配置**——每改一次配置,又制造一批新缓存
 3. 只有本机能主动清:`sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder`(macOS),Chrome 再开 `chrome://net-internals/#dns` → Clear host cache;手机开关一次飞行模式
 4. 国内网络访问 CF 偶见 **ERR_QUIC_PROTOCOL_ERROR**:UDP 443 被干扰所致,CF 后台 **Network → HTTP/3 (with QUIC) 关闭**即可,走 HTTP/2 无感
