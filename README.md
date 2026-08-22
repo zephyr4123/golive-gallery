@@ -27,7 +27,7 @@
 | 档位 | 方式 | 花费 | 难度 | 示范 |
 |---|---|---|---|---|
 | 🆓 免费托管 | GitHub Pages / Cloudflare Pages / Vercel | 0 元 | ⭐~⭐⭐ | [Reverie ✅](https://dreamcore.golive-gallery.art) · [Acreage ✅](https://acreage.golive-gallery.art) |
-| 🚇 内网穿透 | Cloudflare Tunnel / cpolar / ngrok | 0 元起 | ⭐⭐~⭐⭐⭐ | 本机服务 → 公网子域名 |
+| 🚇 内网穿透 | Cloudflare Tunnel / cpolar / ngrok | 0 元起 | ⭐⭐~⭐⭐⭐ | 本机服务 → 公网地址(**stage 环境**,不常驻) |
 | 🏭 工业级 | 云服务器 + 域名 + Caddy + HTTPS | 真金白银 | ⭐⭐⭐⭐+ | VPS 上的完整链路 |
 
 ## 🖼 已上线站点
@@ -39,7 +39,7 @@
 | **[Reverie ↗](https://dreamcore.golive-gallery.art)**<br><sub>贩卖梦境的旅行社</sub> | 传送门穿越动效、九条梦境航线,滚动叙事多页 SPA | 🆓 GitHub Pages<br><sub>CI 构建后推 artifact</sub> | ⭐ | [dreamcore 实战](docs/sites/dreamcore.md) | [`sites/dreamcore`](sites/dreamcore) |
 | **[Acreage ↗](https://acreage.golive-gallery.art)**<br><sub>精准农业收割服务</sub> | 视频首屏、深浅交替、Logo 跑马灯、逐字校验表单,单页锚点站 | 🆓 Cloudflare Pages<br><sub>平台直连 Git 自建</sub> | ⭐⭐ | [acreage 实战](docs/sites/acreage.md) | [`sites/acreage`](sites/acreage) |
 
-> 内网穿透档与工业级档的示范站在建。本表登记的是各站 `site.yaml` 里 `status: live` 的站点,机器可读的完整清单跑 `npx golive list`。
+> 本表只登记 7×24 常驻的站点(`site.yaml` 里 `availability: always`)。**内网穿透档的站不在这里**——它跑在作者本机上,是 stage 环境不是托管,打不开是这条路的性质,详见 [02 · 内网穿透](docs/guide/02-tunneling/)。工业级档在建。机器可读的完整清单跑 `npx golive list`。
 
 ## 🔌 MCP × MotionSites:把 prompt 库变成 AI 能检索的能力
 
