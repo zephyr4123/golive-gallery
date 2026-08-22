@@ -12,10 +12,14 @@
 - **第三个示范站 Denta**(`sites/denta`):虚构的牙科问诊 App,单页落地页把 app 的三块真实界面(选服务 / 引导 / 视频问诊)装进手机框摆出来;暖杏 `#FAE0CD` 底色,React 19 + TS + Vite + Tailwind v4,零路由、零运行时动画库
 - **站点实战文档** `docs/sites/denta.md`:**壳与芯分离**的拼装法——`health-portal` 出整页骨架与技术,两份牙科规格出要展示的 app 界面本身,`faq-cta` 出收口段;含 MaskedCard 马赛克(多张卡片共用一张底图)与「设计稿画布」等比缩放两处实现要点
 - `infra/dns/records.md` 登记 denta 的 CNAME,并写明它与前两条的不同类:指向的不是托管平台而是一条通往本机的隧道
+- **平台教程第一篇** `docs/guide/02-tunneling/cloudflared.md`:**只写 Quick Tunnel**——装、跑、逐段读懂启动日志(含 cloudflared 自带的 CONNECTIVITY PRE-CHECKS 自检表)、两个必配项、metrics `/ready` 自查、403/502/530 三层失败长相。全部输出实拍于 cloudflared 2026.8.2
 
 ### Changed
 - 根 README 三档表的内网穿透格填上 Denta,但**只链源码不链站点**——它不常驻,给常驻链接就是骗人
-- `docs/guide/02-tunneling/README.md` 补上示范站段落
+- `docs/guide/02-tunneling/README.md` 补上示范站段落,并写明本档的成文规矩
+
+### 立的规矩
+- **只有做完了才写文档**(主人拍板)。没跑通就写出来的步骤,读者照着走一定会在某个没预料到的地方卡住,而作者不知道卡在哪——比没有文档更糟。落地方式:三篇平台教程的进度各自独立,`cloudflared.md` 只写已经实机跑过的 Quick Tunnel,Named Tunnel 在篇末显式声明「未做所以不写」并列出待验证项;`cpolar.md` / `ngrok.md` 保持「待写」直到真跑通
 
 ### 教训
 - **分类和 `kind` 字段都会骗人**:`dental-care-app` 分类是 `Health App`、`kind` 是 `website`,拉全文才发现标题写着 `App Screens (Standalone)` —— 它是三块手机屏幕稿,不是网站。全库 `kind` 都是 `website`,`list_prompts` 的 `kind=app` 过滤器返回空数组。**形态只能靠拉全文判断**
