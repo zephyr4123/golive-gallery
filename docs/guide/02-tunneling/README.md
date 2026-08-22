@@ -25,7 +25,7 @@
 
 同一件事有三种做法,差别不在"能不能",在**地址是谁的、证书谁管、访客第一眼看到什么**:
 
-1. **Cloudflare Tunnel**(`cloudflared.md`,待写)—— 本档首选。免费绑自有子域名 + 自动 HTTPS,无访客插页。代价是域名的 DNS 必须整个托管在 Cloudflare(本项目已满足,见 [Cloudflare 解析篇](../01-free-hosting/custom-domain-cloudflare.md))。它还有一个零配置模式(Quick Tunnel),给随机 `*.trycloudflare.com` 地址,不用账号也不用域名
+1. **Cloudflare Tunnel**(`cloudflared.md`,待写)—— 本档首选。免费绑自有子域名 + 自动 HTTPS;实测访客直接进站,没有 ngrok 那种警告插页。代价是域名的 DNS 必须整个托管在 Cloudflare(本项目已满足,见 [Cloudflare 解析篇](../01-free-hosting/custom-domain-cloudflare.md))。它还有一个零配置模式(Quick Tunnel),给随机 `*.trycloudflare.com` 地址,不用账号也不用域名
 2. **cpolar**(`cpolar.md`,待写)—— 国产方案,中文文档、大陆节点、注册即用。免费档能跑通全套机制,适合先理解原理;要拿它当长期地址,得知道各档真实代价(见下表)
 3. **ngrok**(`ngrok.md`,待写)—— 机制最干净的教科书样例:装好、一条命令、拿到公网地址,全程三十秒。它的免费档限制本身就是最好的教材——你能清楚看到"免费的隧道"和"托管"之间隔着什么
 
@@ -51,15 +51,23 @@
 
 ## 动手前:两个所有链路都会撞上的拦路虎
 
-与用哪家无关,只要你伺服的是 Vite 构建产物就会遇到。本项目在 Vite 7.3.6 上实拍过:
+与用哪家无关,只要你伺服的是 Vite 构建产物就会遇到。下面的输出是 2026-08-22 在本项目上实拍的:Vite 7.3.6 + cloudflared 2026.8.2,起一条 Quick Tunnel 打到 `sites/acreage` 的构建产物。
 
 **一、`vite preview` 按 Host 校验,隧道域名一律 403**
 
-```bash
-$ curl -H 'Host: demo.trycloudflare.com' http://[::1]:4173/
-Blocked request. This host ("demo.trycloudflare.com") is not allowed.
-To allow this host, add "demo.trycloudflare.com" to `preview.allowedHosts` in vite.config.js.
+隧道通了、本机也是好的,访客却拿到一段纯文本:
+
 ```
+$ curl -D- https://consumers-alert-sacred-wars.trycloudflare.com/
+HTTP/2 403
+content-type: text/plain
+server: cloudflare
+
+Blocked request. This host ("consumers-alert-sacred-wars.trycloudflare.com") is not allowed.
+To allow this host, add "consumers-alert-sacred-wars.trycloudflare.com" to `preview.allowedHosts` in vite.config.js.
+```
+
+注意这个 403 是 **Vite 发的**,不是 Cloudflare 拦的——`server: cloudflare` 只说明它经过了 CF 边缘。看到这段就说明隧道其实是通的,问题在最后一跳。
 
 站点的 `vite.config.ts` 里得放行:
 
@@ -72,14 +80,62 @@ export default defineConfig({
 })
 ```
 
+写进站点的 `vite.config.ts`:
+
+```ts
+export default defineConfig({
+  preview: {
+    // 隧道域名不在默认白名单里。以点开头是后缀通配,一次覆盖该服务商所有随机子域
+    allowedHosts: ['.trycloudflare.com', '.ngrok-free.app', 'yoursite.<BASE_DOMAIN>'],
+  },
+})
+```
+
+后缀通配实测有效:配上 `.trycloudflare.com` 之后,同一条隧道立刻从 403 变成 200 并返回站点自己的 HTML。
+
 **二、`vite preview` 只监听 `[::1]`,回源地址不能写 `127.0.0.1`**
 
-启动时它自己打印的是 `Local: http://localhost:4174/`,而 `curl 127.0.0.1:4173` 直接连不上——macOS 上 `localhost` 优先解析到 IPv6。隧道配置里的回源地址一律写 `http://localhost:<port>`,不要写 `127.0.0.1`,否则症状是"隧道显示已连接,访客却 502"。
+它启动时打印的是 `Local: http://localhost:4173/`,看起来人畜无害,实际只在 IPv6 回环上:
+
+```bash
+$ curl -o /dev/null -w '%{http_code}' http://localhost:4173/   # 200
+$ curl -o /dev/null -w '%{http_code}' http://127.0.0.1:4173/   # 000  连不上
+$ lsof -nP -iTCP:4173 -sTCP:LISTEN
+node  17074  ...  TCP [::1]:4173 (LISTEN)
+```
+
+同一台机器、同一个端口、同一时刻,两条隧道的 A/B 对照:
+
+| 回源地址 | 隧道自身状态 | 访客拿到 |
+|---|---|---|
+| `http://localhost:4173` | Registered tunnel connection | ✅ 200 |
+| `http://127.0.0.1:4173` | Registered tunnel connection | ❌ 502 Bad gateway |
+
+cloudflared 侧的报错原文是 `dial tcp 127.0.0.1:4173: connect: connection refused`。**隧道显示已连接、访客却 502**,九成是这一条。回源一律写 `localhost`。
 
 顺带两条同源的坑:
 
-- 启动务必带 `--strictPort`。端口被占时 Vite 会**静默换一个端口**继续跑(它只在日志里写一行 `Port 4173 is in use, trying another one...`),隧道那头还指着原端口,于是你得到一个连得上却永远 502 的隧道
+- 启动务必带 `--strictPort`。不带的时候端口被占,Vite 会**静默换一个端口**继续跑——它只在日志里写一行 `Port 4173 is in use, trying another one...` 然后打印 `Local: http://localhost:4174/`,隧道那头还指着 4173,于是你得到一个连得上却永远 502 的隧道。带上之后它会直接 `Error: Port 4173 is already in use` 退出,失败得响亮
 - **公开分享一律用 `vite preview`,不要用 `vite dev`。** dev server 会通过隧道把源码、文件路径、项目结构一起暴露给公网
+
+## 出问题时:先看状态码是哪一层发的
+
+隧道链路有三跳,三跳各有各的失败长相。同一条 Quick Tunnel 上逐个实测出来的:
+
+| 现象 | 断在哪 | 怎么确认 |
+|---|---|---|
+| `403` + `Blocked request. This host ... is not allowed` | 最后一跳:本地服务不认这个 Host | 隧道其实是通的,去配 `allowedHosts` |
+| `502 Bad gateway`(Cloudflare 品牌页) | 中间一跳:隧道在,回源连不上 | 看 cloudflared 日志的 `Unable to reach the origin service`——本地服务挂了,或回源写了 `127.0.0.1` |
+| `530`,标题 `Cloudflare Tunnel error` | 第一跳:隧道进程本身没了 | 这就是"本机关机"访客看到的那一页。注意 DNS 还在正常解析,不是域名坏了 |
+
+本机这一侧的自查不用猜,cloudflared 自带一个只监听本地的 metrics 端点:
+
+```bash
+$ curl -s http://127.0.0.1:20241/ready
+{"status":200,"readyConnections":1,"connectorId":"33d97e25-..."}
+```
+
+`readyConnections` 大于 0 就说明隧道到边缘的连接是活的——此时若访客仍打不开,问题一定在回源那一跳,不用再去怀疑网络。
 
 ## 安全边界
 
