@@ -126,8 +126,16 @@ function crossValidate(sites: Site[], issues: Issue[]): void {
     }
 
     if (m.deploy.target === 'github-pages') githubPagesCount += 1
-    if (m.deploy.target === 'tunnel' && m.availability !== 'best-effort') {
-      issues.push({ site: site.name, level: 'warn', message: '隧道档站点建议标 availability: best-effort(本机不在线站点即离线)' })
+
+    // availability 是双向硬约束,不是建议:标错哪一边都是在对读者撒谎——
+    // 漏标 = 承诺一个随时会离线的站随时可访问;误标 = 白白劝退访客。
+    // warn 不置退出码,CI 挡不住,所以这里必须是 error。
+    const isTunnel = m.deploy.target === 'tunnel'
+    if (isTunnel && m.availability !== 'best-effort') {
+      issues.push({ site: site.name, level: 'error', message: `隧道档站点必须标 availability: best-effort(本机不在线站点即离线),当前为 ${m.availability}` })
+    }
+    if (!isTunnel && m.availability === 'best-effort') {
+      issues.push({ site: site.name, level: 'error', message: `${m.deploy.target} 是平台托管,不该标 availability: best-effort——它与本机开关机无关` })
     }
   }
 
