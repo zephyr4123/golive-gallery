@@ -1,9 +1,24 @@
-# cpolar 配置模板 —— 付费订阅绑定自定义域名(海外节点免备案)
-# authtoken 用 `cpolar authtoken <TOKEN>` 写入本机 ~/.cpolar/,不进仓库
+# cpolar 配置模板 —— 绑定自有域名做长期示范
+#
+# 三个前提,缺一条都跑不起来(核于 2026-08-22,官方文档 2.3 / 5.1 / 5.2 节):
+#   1. 绑自有域名需 专业版(Pro)及以上,基础版只能给固定二级子域名
+#   2. region 必须显式写。默认是 cn_top(大陆节点),而大陆节点要求域名
+#      已完成 ICP 备案;<BASE_DOMAIN> 未备案,所以只能走 us / hk / tw / eu
+#   3. 后台「预留 → 保留自定义域名」时选的地区,必须与这里的 region 一致,
+#      否则隧道根本起不来(官方原文:会产生错误并阻止隧道会话初始化)
+#
+# authtoken 用 `cpolar authtoken <TOKEN>` 写入本机,不进仓库
+# 本文件对应本机的 ~/.cpolar/cpolar.yml 或服务化后的 /usr/local/etc/cpolar/cpolar.yml
+# YAML 缩进敏感且不能有 TAB —— 官方专门警告过这一条
 
 tunnels:
   golive-<SITE>:
     proto: http
     addr: "4173"
-    region: us          # 大陆节点要求域名已备案,.gallery 走海外节点
-    hostname: <SUBDOMAIN>.<BASE_DOMAIN> # 填你站点的 subdomain(cpolar 后台配 CNAME),并先在 infra/dns/records.md 登记
+    region: us # 未备案域名只能选 us/hk/tw/eu;留空会落到默认的大陆节点 cn_top
+    hostname: <SUBDOMAIN>.<BASE_DOMAIN> # 先在 cpolar 后台预留并加 CNAME,再到 infra/dns/records.md 登记
+
+    # 自有域名的 HTTPS 证书要自己提供 —— cpolar 不签发也不续期。
+    # 「绑上域名就有 https」只适用于它自家的 *.cpolar.cn(那个域名它自己备了案)。
+    crt: <PATH_TO_TLS_CRT>
+    key: <PATH_TO_TLS_KEY>

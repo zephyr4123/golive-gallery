@@ -1,12 +1,20 @@
 # Cloudflare Tunnel 配置模板 —— 免费把自有子域名路由到本机
-# 前提:<BASE_DOMAIN> 的 DNS 托管在 Cloudflare
+#
+# 前提:<BASE_DOMAIN> 的 DNS 托管在 Cloudflare(本项目已满足)
 # 用法:cloudflared tunnel create golive → 凭据落在 ~/.cloudflared/(不进仓库)
 #       复制本文件为 ~/.cloudflared/config.yml 并填 tunnel id
+#       DNS 记录用 `cloudflared tunnel route dns` 自动写入,写完到 infra/dns/records.md 登记
 
 tunnel: <TUNNEL_ID>
 credentials-file: ~/.cloudflared/<TUNNEL_ID>.json
 
 ingress:
+  # 只放行一个子域名到一个本机端口 —— 隧道暴露的是你自己的机器,ingress 宁窄勿宽。
+  # 另注意 Universal SSL 只覆盖根域与一级子域:a.b.<BASE_DOMAIN> 这种二级以上
+  # 子域不在免费证书里,浏览器会直接报证书错误。
   - hostname: <SUBDOMAIN>.<BASE_DOMAIN> # 填你站点 site.yaml 的 subdomain,并先在 infra/dns/records.md 登记
+    # 回源必须写 localhost 而非 127.0.0.1:vite preview 只监听 [::1],
+    # 写 127.0.0.1 的症状是隧道显示已连接、访客却拿到 502
     service: http://localhost:4173
+  # catch-all 是必填项,少了这条配置不合法
   - service: http_status:404
