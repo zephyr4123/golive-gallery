@@ -27,7 +27,7 @@
 | 档位 | 方式 | 花费 | 难度 | 示范 |
 |---|---|---|---|---|
 | 🆓 免费托管 | GitHub Pages / Cloudflare Pages / Vercel | 0 元 | ⭐~⭐⭐ | [Reverie ✅](https://dreamcore.golive-gallery.art) · [Acreage ✅](https://acreage.golive-gallery.art) |
-| 🚇 内网穿透 | Cloudflare Tunnel / cpolar / ngrok | 0 元起 | ⭐⭐~⭐⭐⭐ | 本机服务 → 公网地址(**stage 环境**,不常驻) |
+| 🚇 内网穿透 | Cloudflare Tunnel / cpolar / ngrok | 0 元起 | ⭐⭐~⭐⭐⭐ | [Denta](sites/denta) —— 跑在本机的 **stage 环境**,不常驻 |
 | 🏭 工业级 | 云服务器 + 域名 + Caddy + HTTPS | 真金白银 | ⭐⭐⭐⭐+ | VPS 上的完整链路 |
 
 ## 🖼 已上线站点

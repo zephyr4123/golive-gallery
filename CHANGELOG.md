@@ -4,6 +4,24 @@
 
 发版流程见 [CONTRIBUTING.md](CONTRIBUTING.md);每个版本的条目由人写、由 CI 校验(`scripts/changelog.mjs`),推 `v*` tag 自动创建 GitHub Release。
 
+## [Unreleased]
+
+第三个示范站 Denta 建成,内网穿透档从「只有导读」进入「有站可跑」。尚未接上 cpolar 隧道,`status: building`。
+
+### Added
+- **第三个示范站 Denta**(`sites/denta`):虚构的牙科问诊 App,单页落地页把 app 的三块真实界面(选服务 / 引导 / 视频问诊)装进手机框摆出来;暖杏 `#FAE0CD` 底色,React 19 + TS + Vite + Tailwind v4,零路由、零运行时动画库
+- **站点实战文档** `docs/sites/denta.md`:**壳与芯分离**的拼装法——`health-portal` 出整页骨架与技术,两份牙科规格出要展示的 app 界面本身,`faq-cta` 出收口段;含 MaskedCard 马赛克(多张卡片共用一张底图)与「设计稿画布」等比缩放两处实现要点
+- `infra/dns/records.md` 登记 denta 的 CNAME,并写明它与前两条的不同类:指向的不是托管平台而是一条通往本机的隧道
+
+### Changed
+- 根 README 三档表的内网穿透格填上 Denta,但**只链源码不链站点**——它不常驻,给常驻链接就是骗人
+- `docs/guide/02-tunneling/README.md` 补上示范站段落
+
+### 教训
+- **分类和 `kind` 字段都会骗人**:`dental-care-app` 分类是 `Health App`、`kind` 是 `website`,拉全文才发现标题写着 `App Screens (Standalone)` —— 它是三块手机屏幕稿,不是网站。全库 `kind` 都是 `website`,`list_prompts` 的 `kind=app` 过滤器返回空数组。**形态只能靠拉全文判断**
+- **Tailwind preflight 的 `img { max-width: 100% }` 会悄悄钳掉刻意超宽的图**:引导屏那块底图设计宽 2712px(靠负 `left` 把人脸推进取景框),实际渲染只有 293px,反推正好等于父容器宽度。症状是「图加载成功、尺寸样式也写了、就是不对」——先量 `getBoundingClientRect()` 反推缩放链,别盯着 `src` 查
+- **`ResizeObserver` 观察不到字体换装引起的挪位**:马赛克靠量卡片偏移定位,区块是 `h-screen` 高度不变,四套 Google Fonts 就位后文字撑动卡片却触发不了观察器。要额外挂一次 `document.fonts.ready` 重量
+
 ## [1.1.0] - 2026-08-22
 
 第二个示范站上线,免费托管档补齐第二条链路;项目最大的方法论收获沉淀进根 README。
