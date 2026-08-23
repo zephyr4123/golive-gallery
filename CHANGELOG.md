@@ -4,7 +4,7 @@
 
 发版流程见 [CONTRIBUTING.md](CONTRIBUTING.md);每个版本的条目由人写、由 CI 校验(`scripts/changelog.mjs`),推 `v*` tag 自动创建 GitHub Release。
 
-## [Unreleased]
+## [1.2.0] - 2026-08-23
 
 第三个示范站 Denta 建成并上线,内网穿透档从「只有导读」走到「自有域名端到端跑通」。同时补上了 `docs/basics/` 概念层——三档教程默认读者已懂的名词,现在有地方查了。
 
@@ -13,8 +13,8 @@
 - **站点实战文档** `docs/sites/denta.md`:**壳与芯分离**的拼装法——`health-portal` 出整页骨架与技术,两份牙科规格出要展示的 app 界面本身,`faq-cta` 出收口段;含 MaskedCard 马赛克(多张卡片共用一张底图)与「设计稿画布」等比缩放两处实现要点
 - `infra/dns/records.md` 登记 denta 的 CNAME,并写明它与前两条的不同类:指向的不是托管平台而是一条通往本机的隧道
 - **basics 概念层**(`docs/basics/`,八篇 1300 行):补上零基础读者打开任何一篇教程都会撞上的名词墙——网页是怎么送到人眼前的、终端与 localhost 与端口、Node 与 npm 与构建产物、Git 与 GitHub、域名与 DNS、HTTPS 与证书、Cloudflare 的四个角色、内网穿透原理。只讲"是什么、凭什么能工作",不含任何本项目特定的操作步骤。原 `guide/00-basics` 移出并拆进域名篇与证书篇——它是跨档的参照层,不是"第 0 步操作"
-- **平台教程第二篇** `docs/guide/02-tunneling/cpolar.md`:**本档第一条端到端跑通、挂上自有域名、带 HTTPS 的链路**。含保留域名与地区的真实模型、自签名证书为什么够用、CF 橙云 + Full 的组合、配置文件形态、三层验证法,以及两个"会让你怀疑人生的非故障"(CF 新记录 2.5 分钟收敛期新旧 zone 版本并存、macOS 负缓存导致"全世界都能开就我不能")
 - **平台教程第一篇** `docs/guide/02-tunneling/cloudflared.md`:**只写 Quick Tunnel**——装、跑、逐段读懂启动日志(含 cloudflared 自带的 CONNECTIVITY PRE-CHECKS 自检表)、两个必配项、metrics `/ready` 自查、403/502/530 三层失败长相。全部输出实拍于 cloudflared 2026.8.2
+- **平台教程第二篇** `docs/guide/02-tunneling/cpolar.md`:**本档第一条端到端跑通、挂上自有域名、带 HTTPS 的链路**。含保留域名与地区的真实模型、自签名证书为什么够用、CF 橙云 + Full 的组合、配置文件形态、三层验证法,以及两个"会让你怀疑人生的非故障"(CF 新记录 2.5 分钟收敛期新旧 zone 版本并存、macOS 负缓存导致"全世界都能开就我不能")
 
 ### Changed
 - 根 README 三档表的内网穿透格填上 Denta,但**只链源码不链站点**——它不常驻,给常驻链接就是骗人
