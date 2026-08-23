@@ -13,6 +13,8 @@ export function tunnelCommand(name: string): void {
   console.log(pc.dim('前置检查:'))
   for (const check of tunnelAdapter.preflight(site)) {
     console.log(`  ${check.ok ? pc.green('✓') : pc.yellow('⚠')} ${check.label}`)
+    // hint 是"动手前该知道的前提",与检查过没过无关,所以两种情况都打
+    if (check.hint) console.log(`    ${pc.dim(check.hint)}`)
   }
   console.log(pc.dim('\n启动步骤(隧道是前台长驻进程,关掉终端站点即离线):'))
   for (const line of tunnelAdapter.plan(site)) console.log(`  ${line.startsWith('#') ? pc.dim(line) : line}`)

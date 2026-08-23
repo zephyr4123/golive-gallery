@@ -2,11 +2,18 @@ import pc from 'picocolors'
 import { loadRegistry } from '../core/registry.ts'
 import { BASE_DOMAIN } from '../core/config.ts'
 
+// status = 生命周期(人工推进);availability = 运行时可达性(随机器开关变)。
+// 两根轴正交:隧道站是 live + best-effort——它确实上线了,但不保证此刻开着。
 const STATUS_ICON: Record<string, string> = {
   draft: pc.dim('◌ draft'),
   building: pc.yellow('◐ building'),
   live: pc.green('● live'),
   archived: pc.dim('◇ archived'),
+}
+
+const AVAILABILITY_TAG: Record<string, string> = {
+  always: '',
+  'best-effort': pc.yellow('🔌 按需在线'),
 }
 
 export function listCommand(options: { json?: boolean }): void {
@@ -32,7 +39,10 @@ export function listCommand(options: { json?: boolean }): void {
   for (const site of sites) {
     const m = site.manifest
     const stars = '⭐'.repeat(m.difficulty)
-    console.log(`  ${pc.bold(m.name.padEnd(16))} ${STATUS_ICON[m.status]}`)
+    // 无兜底下标查表:枚举加值却漏配图标会静默打印 undefined,所以显式兜底
+    const status = STATUS_ICON[m.status] ?? m.status
+    const availability = AVAILABILITY_TAG[m.availability] ?? ''
+    console.log(`  ${pc.bold(m.name.padEnd(16))} ${status}${availability ? `  ${pc.dim('·')}  ${availability}` : ''}`)
     console.log(`  ${pc.dim('│')} ${m.title} — ${m.description}`)
     console.log(`  ${pc.dim('│')} ${pc.cyan(`${m.subdomain}.${BASE_DOMAIN}`)}  ${pc.dim('·')}  ${m.deploy.target}  ${pc.dim('·')}  难度 ${stars}`)
     console.log(`  ${pc.dim('└')} 教程:${pc.dim(m.docs)}`)

@@ -2,6 +2,9 @@
 
 > 本项目第二个示范站(Acreage)走的就是这条链路。与 [GitHub Pages 篇](github-pages.md) 是刻意的对照:同样免费、同样绑自定义域名,但**谁来构建**这件事完全不同。
 
+> 📖 需要先懂的:[Cloudflare 是什么](../../basics/07-cloudflare.md)(它同时在扮演的四个角色)、
+> [Node 与 npm](../../basics/03-node-and-npm.md)(平台是在**它自己的机器上**跑构建,所以本机能构建不代表平台能)。
+
 ## 原理一句话
 
 你把仓库授权给 Cloudflare,它自己 clone、自己跑构建命令、自己托管产物。构建配置填在平台面板里,不进你的版本库——这跟 GitHub Pages 要你在仓库里写一份 workflow YAML 正好相反。

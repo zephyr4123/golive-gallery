@@ -4,6 +4,39 @@
 
 发版流程见 [CONTRIBUTING.md](CONTRIBUTING.md);每个版本的条目由人写、由 CI 校验(`scripts/changelog.mjs`),推 `v*` tag 自动创建 GitHub Release。
 
+## [1.2.0] - 2026-08-23
+
+第三个示范站 Denta 建成并上线,内网穿透档从「只有导读」走到「自有域名端到端跑通」。同时补上了 `docs/basics/` 概念层——三档教程默认读者已懂的名词,现在有地方查了。
+
+### Added
+- **第三个示范站 Denta**(`sites/denta`):虚构的牙科问诊 App,单页落地页把 app 的三块真实界面(选服务 / 引导 / 视频问诊)装进手机框摆出来;暖杏 `#FAE0CD` 底色,React 19 + TS + Vite + Tailwind v4,零路由、零运行时动画库
+- **站点实战文档** `docs/sites/denta.md`:**壳与芯分离**的拼装法——`health-portal` 出整页骨架与技术,两份牙科规格出要展示的 app 界面本身,`faq-cta` 出收口段;含 MaskedCard 马赛克(多张卡片共用一张底图)与「设计稿画布」等比缩放两处实现要点
+- `infra/dns/records.md` 登记 denta 的 CNAME,并写明它与前两条的不同类:指向的不是托管平台而是一条通往本机的隧道
+- **basics 概念层**(`docs/basics/`,八篇 1300 行):补上零基础读者打开任何一篇教程都会撞上的名词墙——网页是怎么送到人眼前的、终端与 localhost 与端口、Node 与 npm 与构建产物、Git 与 GitHub、域名与 DNS、HTTPS 与证书、Cloudflare 的四个角色、内网穿透原理。只讲"是什么、凭什么能工作",不含任何本项目特定的操作步骤。原 `guide/00-basics` 移出并拆进域名篇与证书篇——它是跨档的参照层,不是"第 0 步操作"
+- **平台教程第一篇** `docs/guide/02-tunneling/cloudflared.md`:**只写 Quick Tunnel**——装、跑、逐段读懂启动日志(含 cloudflared 自带的 CONNECTIVITY PRE-CHECKS 自检表)、两个必配项、metrics `/ready` 自查、403/502/530 三层失败长相。全部输出实拍于 cloudflared 2026.8.2
+- **平台教程第二篇** `docs/guide/02-tunneling/cpolar.md`:**本档第一条端到端跑通、挂上自有域名、带 HTTPS 的链路**。含保留域名与地区的真实模型、自签名证书为什么够用、CF 橙云 + Full 的组合、配置文件形态、三层验证法,以及两个"会让你怀疑人生的非故障"(CF 新记录 2.5 分钟收敛期新旧 zone 版本并存、macOS 负缓存导致"全世界都能开就我不能")
+
+### Changed
+- 根 README 三档表的内网穿透格填上 Denta,但**只链源码不链站点**——它不常驻,给常驻链接就是骗人
+- `docs/guide/02-tunneling/README.md` 补上示范站段落,并写明本档的成文规矩
+- **Denta 转 `status: live`**:cpolar 自定义域名全链路实测 200,教程成文。注意 live ≠ 常驻——常驻与否看 `availability`,本站仍是 `best-effort`,不进「已上线站点」表
+- **`docs/README.md` 改成三层导航**(basics 概念 / guide 操作 / sites 实战)+ 两条阅读路线;三档表新增"能不能常驻"一列——那才是三档最实质的差别,不是难度
+- 三档教程头部统一加「📖 需要先懂的」入口,精确指向用得上的那几篇基础篇
+- **02 档的 stage 定性补足**:把口径从"隧道有个缺点"翻成正面主张——**不要追求常驻,追求说得清什么时候能开**;并写明它对新手的独特价值:这是"让别人看到我做的东西"最短的一条路径,不用买域名、不用注册平台、不用懂部署
+
+### Fixed
+- **订正三条 cpolar 错误口径**(真绑自有域名后实测推翻,原写在 `infra/tunnel/cpolar.example.yml`、`cli/src/adapters/tunnel.ts`、02 档对比表):① region 不必显式写,不带它隧道照常建立;② 后台预留地区与启动参数 region 不一致也照样通——地区在"保留自定义域名"那一步就定死了,启动时的 `-region` 只决定客户端连哪台服务器;③ 配置文件始终是 `~/.cpolar/cpolar.yml`,不是官方文档说的 `/usr/local/etc/cpolar/cpolar.yml`
+- CLI 的 cpolar 启动提示从 `cpolar start-all` 改为 `cpolar start <site>`——`start-all` 会连带拉起用户自己的其它隧道,吃掉并发配额
+- 02 档正文里 `allowedHosts` 代码块连同引导句重复了两遍,删掉先出现的那份
+
+### 立的规矩
+- **只有做完了才写文档**(主人拍板)。没跑通就写出来的步骤,读者照着走一定会在某个没预料到的地方卡住,而作者不知道卡在哪——比没有文档更糟。落地方式:三篇平台教程的进度各自独立,`cloudflared.md` 只写已经实机跑过的 Quick Tunnel,Named Tunnel 在篇末显式声明「未做所以不写」并列出待验证项;`cpolar.md` 直到自有域名真跑通才动笔,`ngrok.md` 至今保持「待写」因为还没装过 ngrok。`cpolar.md` 篇末同样列出五条未做项(不经 CF 的路线、Origin CA 证书、Full (strict)、service 常驻、基础版边界)
+
+### 教训
+- **分类和 `kind` 字段都会骗人**:`dental-care-app` 分类是 `Health App`、`kind` 是 `website`,拉全文才发现标题写着 `App Screens (Standalone)` —— 它是三块手机屏幕稿,不是网站。全库 `kind` 都是 `website`,`list_prompts` 的 `kind=app` 过滤器返回空数组。**形态只能靠拉全文判断**
+- **Tailwind preflight 的 `img { max-width: 100% }` 会悄悄钳掉刻意超宽的图**:引导屏那块底图设计宽 2712px(靠负 `left` 把人脸推进取景框),实际渲染只有 293px,反推正好等于父容器宽度。症状是「图加载成功、尺寸样式也写了、就是不对」——先量 `getBoundingClientRect()` 反推缩放链,别盯着 `src` 查
+- **`ResizeObserver` 观察不到字体换装引起的挪位**:马赛克靠量卡片偏移定位,区块是 `h-screen` 高度不变,四套 Google Fonts 就位后文字撑动卡片却触发不了观察器。要额外挂一次 `document.fonts.ready` 重量
+
 ## [1.1.0] - 2026-08-22
 
 第二个示范站上线,免费托管档补齐第二条链路;项目最大的方法论收获沉淀进根 README。

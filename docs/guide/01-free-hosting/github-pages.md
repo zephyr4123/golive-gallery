@@ -3,6 +3,9 @@
 > 适合:纯静态站(构建产物是一堆文件)。费用:0。前提:公开仓库(免费账号)。
 > 本篇的活例子:本仓库的 `sites/dreamcore`,线上地址 `dreamcore.<BASE_DOMAIN>`。
 
+> 📖 需要先懂的:[Git 与 GitHub](../../basics/04-git-and-github.md)(仓库、分支、push 为什么等于发布)、
+> [Node 与 npm](../../basics/03-node-and-npm.md)(什么是构建、为什么上线的是 `dist/`)。
+
 ## 原理一句话
 
 GitHub 把你仓库里(或 CI 构建出的)静态文件,放到它的全球 CDN 上按域名分发。你不用管服务器、带宽、扩容——代价是只能放静态内容,且**一个仓库只能有一个 Pages 站**。
@@ -52,7 +55,7 @@ push 到 main(且命中 paths 过滤)即自动部署;也可在 Actions 页手动
 |---|---|---|
 | `dreamcore` | CNAME | `<用户名>.github.io` |
 
-**为什么记录值不带仓库名**?这是每个人第一次绑域名都会卡住的问题:DNS 的 CNAME 只能指向域名,指不了路径([模型二](../00-basics/README.md))。真正的分流靠 Host 头——访客带着 `dreamcore.<BASE_DOMAIN>` 到达 GitHub 边缘,GitHub 查"哪个仓库登记了这个域名"(就是第 1 步填的那格),回的自然是那个仓库的站。以后再加十个项目站,CNAME 记录值全都是 `<用户名>.github.io`,靠各自仓库的登记互相区分。
+**为什么记录值不带仓库名**?这是每个人第一次绑域名都会卡住的问题:DNS 的 CNAME 只能指向域名,指不了路径([05 · 域名与 DNS](../../basics/05-domain-and-dns.md#cname-只能指域名不能带路径))。真正的分流靠 Host 头——访客带着 `dreamcore.<BASE_DOMAIN>` 到达 GitHub 边缘,GitHub 查"哪个仓库登记了这个域名"(就是第 1 步填的那格),回的自然是那个仓库的站。以后再加十个项目站,CNAME 记录值全都是 `<用户名>.github.io`,靠各自仓库的登记互相区分。
 
 **顺序建议:先把 DNS 记录加好、确认能解析,再去 GitHub 填 Custom domain**——GitHub 会在你填的时刻验证域名,DNS 还没就绪会导致验证失败。
 

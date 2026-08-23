@@ -4,7 +4,7 @@
 >
 > 站点:[`sites/dreamcore`](../../sites/dreamcore) · 部署:GitHub Pages + Cloudflare 解析 · 素材:MotionSites prompt 库
 >
-> 本篇是第一个示范站从 0 到上线的完整实战。通用原理不重复,随文引用 [00 · 基础](../guide/00-basics/README.md)、[GitHub Pages 篇](../guide/01-free-hosting/github-pages.md)、[Cloudflare 解析篇](../guide/01-free-hosting/custom-domain-cloudflare.md)。
+> 本篇是第一个示范站从 0 到上线的完整实战。通用原理不重复,随文引用[基础层](../basics/README.md)、[GitHub Pages 篇](../guide/01-free-hosting/github-pages.md)、[Cloudflare 解析篇](../guide/01-free-hosting/custom-domain-cloudflare.md)。
 
 ## 成品与架构
 

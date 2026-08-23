@@ -1,0 +1,181 @@
+@import 'tailwindcss';
+
+/* Denta 的设计系统:一块暖杏底色贯穿全站,三支字体各司其职。
+   色值与字体分工取自 dental-care-app 规格;原稿的大标题用自托管的 Luxora Grotesk,
+   素材方只给了相对路径没给字体文件,换成 Google Fonts 上气质最接近的轻字重 grotesk。 */
+@theme {
+  --font-display: 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+  --font-brand: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+
+  --color-apricot: #fae0cd;
+  --color-screen: #f6f6f6;
+  --color-ink: #101010;
+  --color-pill: #0b0b0b;
+  --color-pill-txt: #3a3a3a;
+  --color-pill-border: #e4e3e1;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scrollbar-gutter: stable;
+}
+
+body {
+  margin: 0;
+  background: var(--color-apricot);
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 键盘可达性:全站靠细分隔线与浅底,默认 outline 在暖杏底上几乎看不见 */
+:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 3px;
+}
+
+/* Material Symbols 是图标字体,ligature 名要原样渲染,不能被字距或大小写改动 */
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 手机屏的入场四件套,取自 dental-implant-clinic 规格 */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes blur-in {
+  from {
+    opacity: 0;
+    filter: blur(12px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* 转化卡的活体渐变:五团径向色斑各自漂移 + 各自呼吸,靠 @property 让百分比自定义属性
+   能被插值(普通自定义属性只会在两帧之间硬切)。取自 faq-cta 规格,配色换成本站的暖杏系。 */
+@property --blob-x1 { syntax: '<percentage>'; inherits: false; initial-value: 10%; }
+@property --blob-y1 { syntax: '<percentage>'; inherits: false; initial-value: 10%; }
+@property --blob-x2 { syntax: '<percentage>'; inherits: false; initial-value: 90%; }
+@property --blob-y2 { syntax: '<percentage>'; inherits: false; initial-value: 10%; }
+@property --blob-x3 { syntax: '<percentage>'; inherits: false; initial-value: 10%; }
+@property --blob-y3 { syntax: '<percentage>'; inherits: false; initial-value: 90%; }
+@property --blob-x4 { syntax: '<percentage>'; inherits: false; initial-value: 90%; }
+@property --blob-y4 { syntax: '<percentage>'; inherits: false; initial-value: 90%; }
+@property --blob-x5 { syntax: '<percentage>'; inherits: false; initial-value: 50%; }
+@property --blob-y5 { syntax: '<percentage>'; inherits: false; initial-value: 50%; }
+@property --blob-s1 { syntax: '<percentage>'; inherits: false; initial-value: 55%; }
+@property --blob-s2 { syntax: '<percentage>'; inherits: false; initial-value: 55%; }
+@property --blob-s3 { syntax: '<percentage>'; inherits: false; initial-value: 55%; }
+@property --blob-s4 { syntax: '<percentage>'; inherits: false; initial-value: 55%; }
+@property --blob-s5 { syntax: '<percentage>'; inherits: false; initial-value: 65%; }
+
+.living-gradient {
+  background-color: #e8b48c;
+  background-image:
+    radial-gradient(circle at var(--blob-x1) var(--blob-y1), #fff4e8 0, transparent var(--blob-s1)),
+    radial-gradient(circle at var(--blob-x2) var(--blob-y2), #c97b4e 0, transparent var(--blob-s2)),
+    radial-gradient(circle at var(--blob-x3) var(--blob-y3), #f5c9a8 0, transparent var(--blob-s3)),
+    radial-gradient(circle at var(--blob-x4) var(--blob-y4), #fae0cd 0, transparent var(--blob-s4)),
+    radial-gradient(circle at var(--blob-x5) var(--blob-y5), #d98e63 0, transparent var(--blob-s5));
+  animation:
+    blob1 5s ease-in-out infinite,
+    blob2 6s ease-in-out infinite,
+    blob3 5.5s ease-in-out infinite,
+    blob4 6.5s ease-in-out infinite,
+    blob5 4s ease-in-out infinite,
+    size1 3.5s ease-in-out infinite,
+    size2 4.2s ease-in-out infinite,
+    size3 3.8s ease-in-out infinite,
+    size4 4.6s ease-in-out infinite,
+    size5 3s ease-in-out infinite;
+}
+
+@keyframes blob1 {
+  0%, 100% { --blob-x1: 5%;  --blob-y1: 5%;  }
+  25%      { --blob-x1: 45%; --blob-y1: 20%; }
+  50%      { --blob-x1: 30%; --blob-y1: 55%; }
+  75%      { --blob-x1: 0%;  --blob-y1: 30%; }
+}
+@keyframes blob2 {
+  0%, 100% { --blob-x2: 95%; --blob-y2: 5%;  }
+  33%      { --blob-x2: 55%; --blob-y2: 35%; }
+  66%      { --blob-x2: 80%; --blob-y2: 65%; }
+}
+@keyframes blob3 {
+  0%, 100% { --blob-x3: 5%;  --blob-y3: 95%;  }
+  40%      { --blob-x3: 45%; --blob-y3: 65%;  }
+  70%      { --blob-x3: 25%; --blob-y3: 100%; }
+}
+@keyframes blob4 {
+  0%, 100% { --blob-x4: 95%;  --blob-y4: 95%; }
+  30%      { --blob-x4: 60%;  --blob-y4: 70%; }
+  60%      { --blob-x4: 100%; --blob-y4: 50%; }
+}
+@keyframes blob5 {
+  0%, 100% { --blob-x5: 50%; --blob-y5: 50%; }
+  25%      { --blob-x5: 70%; --blob-y5: 30%; }
+  50%      { --blob-x5: 40%; --blob-y5: 70%; }
+  75%      { --blob-x5: 30%; --blob-y5: 40%; }
+}
+@keyframes size1 { 0%, 100% { --blob-s1: 45%; } 50% { --blob-s1: 80%; } }
+@keyframes size2 { 0%, 100% { --blob-s2: 45%; } 50% { --blob-s2: 85%; } }
+@keyframes size3 { 0%, 100% { --blob-s3: 45%; } 50% { --blob-s3: 78%; } }
+@keyframes size4 { 0%, 100% { --blob-s4: 45%; } 50% { --blob-s4: 82%; } }
+@keyframes size5 { 0%, 100% { --blob-s5: 50%; } 50% { --blob-s5: 85%; } }

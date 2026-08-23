@@ -1,7 +1,11 @@
 # 自定义域名与 Cloudflare 解析
 
 > 目标:买一个自己的域名,把解析托管到 Cloudflare,免费拿到边缘 HTTPS。
-> 本篇是本项目的正式域名架构:**注册商(腾讯云)+ 解析商(Cloudflare)分离**——先读[模型一](../00-basics/README.md)理解为什么可以分离。
+> 本篇是本项目的正式域名架构:**注册商(腾讯云)+ 解析商(Cloudflare)分离**——先读[05 · 域名与 DNS 的「模型一」](../../basics/05-domain-and-dns.md)理解为什么可以分离。
+>
+> 📖 配套概念:[05 域名与 DNS](../../basics/05-domain-and-dns.md)(记录类型、NS、TTL 与缓存)、
+> [06 HTTPS 与证书](../../basics/06-https-and-certificates.md)(证书跟域名走不跟服务器走)、
+> [07 Cloudflare 是什么](../../basics/07-cloudflare.md)(橙云灰云、Universal SSL 覆盖到哪)。
 
 ## 为什么解析放 Cloudflare
 
@@ -57,7 +61,7 @@ SSL/TLS 模式保持默认(Automatic)即可,CF 会探测源站自动选择。两
 - 访问报 **525/526** → SSL/TLS → Overview 改成 **Flexible**(CF 到源站走 HTTP)
 - 用 Flexible 时,**源站侧的"强制 HTTPS"必须保持关闭**——否则源站把 HTTP 请求 301 回 HTTPS,CF 又用 HTTP 回源,无限循环。这是"Cloudflare + 托管平台"组合最著名的坑,记住成因就不会踩
 
-核验从权威到本机逐层看(命令详解见[模型三](../00-basics/README.md)):
+核验从权威到本机逐层看(命令详解见[05 · 域名与 DNS 的「模型三」](../../basics/05-domain-and-dns.md)):
 
 ```bash
 whois <你的域名> | grep -i 'name server'        # ① 注册局已登记 CF 的 NS?

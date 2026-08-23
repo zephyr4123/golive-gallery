@@ -4,7 +4,7 @@
 >
 > 站点:[`sites/acreage`](../../sites/acreage) · 部署:Cloudflare Pages(平台直连 Git)· 素材:MotionSites prompt 库
 >
-> 本篇是第二个示范站的完整实战。与 [Reverie 篇](dreamcore.md) 是刻意的对照——那站是**一个整页 prompt 摊成八页**,这站是**五个 prompt 收成一页**。部署原理不重复,随文引用 [00 · 基础](../guide/00-basics/README.md)、[Cloudflare Pages 篇](../guide/01-free-hosting/cloudflare-pages.md)。
+> 本篇是第二个示范站的完整实战。与 [Reverie 篇](dreamcore.md) 是刻意的对照——那站是**一个整页 prompt 摊成八页**,这站是**五个 prompt 收成一页**。部署原理不重复,随文引用[基础层](../basics/README.md)、[Cloudflare Pages 篇](../guide/01-free-hosting/cloudflare-pages.md)。
 
 ## 成品与架构
 

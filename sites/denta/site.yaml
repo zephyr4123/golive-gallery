@@ -1,0 +1,34 @@
+# denta —— 站点唯一真相源:部署、画廊索引、教程互链、CI 校验都从这份清单派生
+# 字段定义见 cli/src/core/schema.ts;校验:npx golive check
+name: denta
+title: "Denta"
+description: Denta——虚构的牙科问诊 App(英文站):单页落地页展示三块真实 app 界面,由 MotionSites 四个 prompt 拼装;示范 cpolar 内网穿透
+subdomain: denta # => denta.golive-gallery.art
+difficulty: 3 # 1-5,驱动画廊排序与学习路线
+status: live # draft | building | live | archived(live 前先把教程写完)
+# 2026-08-23 转 live:cpolar 自定义域名全链路实测 200,docs/guide/02-tunneling/cpolar.md 成文。
+# 注意 live 不等于常驻——常驻与否看 availability,本站是 best-effort。
+tags: [app-landing, healthcare, masked-mosaic]
+
+source: # 素材溯源;prompt 原文是付费资产只记编号;资产直用素材方 CDN 时标 assets: cdn
+  generator: motionsites
+  # 壳与芯来自不同 prompt:health-portal 给整页骨架与技术,两份牙科规格给要展示的
+  # app 界面本身(它们是屏幕稿不是网站),faq-cta 给收口段
+  promptId:
+    - health-portal          # 整页骨架:固定导航 + 三段全屏 + MaskedCard 马赛克(原稿的开场读秒未采用)
+    - dental-care-app        # Denta 三块 app 屏(选服务 / 引导 / 视频问诊)+ 品牌与色板
+    - dental-implant-clinic  # 手机外框(灵动岛 + 底部条)与入场动效
+    - faq-cta                # FAQ 手风琴 + 活体渐变转化卡 + 页脚
+  assets: cdn
+
+build:
+  command: npm run build
+  output: dist
+
+deploy:
+  target: tunnel
+  provider: cpolar
+  localPort: 4173
+
+docs: docs/sites/denta.md
+availability: best-effort # 隧道档:本机在线站点才在线,画廊会诚实标注

@@ -10,3 +10,6 @@
 | `<BASE_DOMAIN>` | — | (画廊主站,待定) | 展厅入口 | 未配置 |
 | `dreamcore` | CNAME | `zephyr4123.github.io`(CF 橙云代理) | GitHub Pages 示范(Reverie) | ✅ 已生效(HTTPS 经 CF) |
 | `acreage` | CNAME | `golive-acreage.pages.dev`(CF 自动写入) | Cloudflare Pages 示范(Acreage) | ✅ 已生效(证书 Google Trust Services WE1) |
+| `denta` | CNAME | (cpolar 后台「预留 → 保留自定义域名」时逐域名生成的值) | cpolar 隧道示范(Denta) | ⏳ 待配置 |
+
+> `denta` 这条与上面两条不同类:它指向的不是托管平台,而是一条通往作者本机的隧道。三个前提缺一不可——cpolar 专业版及以上、后台预留域名时选的地区与隧道 `region` 一致、`<BASE_DOMAIN>` 未备案所以只能选 `us`/`hk`/`tw`/`eu`(默认 `cn_top` 是大陆节点会被拒)。自有域名的 HTTPS 证书要自备,cpolar 不签发。
