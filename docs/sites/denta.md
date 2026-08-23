@@ -4,6 +4,8 @@
 >
 > 站点:[`sites/denta`](../../sites/denta) · 部署:cpolar 隧道(本机 `localhost:4173`)· 素材:MotionSites prompt 库
 >
+> 📖 这条链路怎么搭的,完整步骤在 [cpolar 篇](../guide/02-tunneling/cpolar.md);为什么公网找得到你的机器,在 [08 · 内网穿透的原理](../basics/08-tunneling.md)。
+>
 > 本篇是第三个示范站的实战。通用原理不重复,随文引用 [02 · 内网穿透](../guide/02-tunneling/README.md)。
 
 ## 成品与架构

@@ -5,7 +5,9 @@ title: "Denta"
 description: Denta——虚构的牙科问诊 App(英文站):单页落地页展示三块真实 app 界面,由 MotionSites 四个 prompt 拼装;示范 cpolar 内网穿透
 subdomain: denta # => denta.golive-gallery.art
 difficulty: 3 # 1-5,驱动画廊排序与学习路线
-status: building # draft | building | live | archived(live 前先把教程写完)
+status: live # draft | building | live | archived(live 前先把教程写完)
+# 2026-08-23 转 live:cpolar 自定义域名全链路实测 200,docs/guide/02-tunneling/cpolar.md 成文。
+# 注意 live 不等于常驻——常驻与否看 availability,本站是 best-effort。
 tags: [app-landing, healthcare, masked-mosaic]
 
 source: # 素材溯源;prompt 原文是付费资产只记编号;资产直用素材方 CDN 时标 assets: cdn
