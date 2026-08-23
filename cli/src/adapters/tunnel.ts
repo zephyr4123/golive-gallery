@@ -8,7 +8,8 @@ import { BASE_DOMAIN } from '../core/config.ts'
 // 各 provider 的前置检查与命令计划,供 tunnel 命令与 --dry-run 复用。
 //
 // 三家的免费档边界写在代码里而不只在教程里,是因为读者会先跑命令、后读文档。
-// 事实核于 2026-08-22,出处逐条登记在 docs/guide/02-tunneling/README.md。
+// 事实核于 2026-08-22,cpolar 一路于 2026-08-23 真绑自有域名后实测订正;
+// 出处逐条登记在 docs/guide/02-tunneling/README.md。
 
 type TunnelDeploy = Extract<Site['manifest']['deploy'], { target: 'tunnel' }>
 type TunnelProvider = TunnelDeploy['provider']
@@ -16,7 +17,7 @@ type TunnelProvider = TunnelDeploy['provider']
 // 每家最该在动手前知道的那一条(不是功能列表,是会让人白干的那个前提)
 const PROVIDER_CAVEAT: Record<TunnelProvider, string> = {
   cloudflared: '自有子域名与 HTTPS 证书都免费,前提是该域名的 DNS 已托管在 Cloudflare',
-  cpolar: '绑自有域名需专业版及以上;域名未备案时必须显式写 region 到海外节点(默认 cn_top 是大陆,强制备案),且 HTTPS 证书要自备 crt/key',
+  cpolar: '绑自有域名需专业版及以上,且 HTTPS 证书必须自备 crt/key —— 不给证书时边缘 443 根本不做 TLS;地区在后台预留域名那步就定死了,起隧道的 region 与公网路径无关',
   ngrok: '免费档绑不了自有域名——实际地址是账号那个固定的 *.ngrok-free.app;浏览器首访有警告插页(cookie 只压 7 天),配额 1 GB + 20000 请求/月',
 }
 
@@ -56,7 +57,7 @@ export const tunnelAdapter: DeployAdapter = {
       case 'cloudflared':
         return [...serve, `cloudflared tunnel run  # 按 infra/tunnel/cloudflared.example.yml,把 ${bySubdomain} 路由到 localhost:${localPort}`]
       case 'cpolar':
-        return [...serve, `cpolar start-all  # 按 infra/tunnel/cpolar.example.yml:hostname ${bySubdomain} + 海外 region + 自备 crt/key`]
+        return [...serve, `cpolar start ${site.name}  # 按 infra/tunnel/cpolar.example.yml 写进 ~/.cpolar/cpolar.yml:hostname ${bySubdomain} + 自备 crt/key`]
       case 'ngrok':
         return [
           ...serve,
