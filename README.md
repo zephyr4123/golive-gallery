@@ -123,7 +123,10 @@ claude mcp add --transport http motionsites https://xgdzyqfalbibzelpdpvr.supabas
 
 ```
 sites/      展品:一站 = 一目录 = 一个子域名 = 一种部署方式(自包含,cd 进去 npm i 就能跑)
-docs/       讲解词:三档部署原理 + 每站一篇实战教程(与 sites/ 机器校验一一对应)
+docs/       讲解词,分三层:
+  ├ basics/   零基础概念:网页怎么被打开、Node/Git 是什么、DNS、证书、Cloudflare、穿透原理
+  ├ guide/    三档部署教程:免费托管 / 内网穿透 / 工业级
+  └ sites/    每站一篇实战(与 sites/ 机器校验一一对应)
 gallery/    展厅入口:<BASE_DOMAIN> 主站,由各站 site.yaml 自动生成
 cli/        讲解员:golive 命令行,统一管理站点的开发/校验/部署
 infra/      后厨配方:VPS 的 Caddy 配置、隧道配置模板、DNS 记录(全部占位符化,零密钥)
