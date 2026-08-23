@@ -1,5 +1,10 @@
 # 01 · 免费托管
 
+> 📖 **名词卡住了?** 这一档会大量出现仓库、构建、CDN、CNAME、证书这些词。
+> 不确定它们是什么,先看[基础层](../../basics/README.md)——尤其是
+> [03 Node 与 npm](../../basics/03-node-and-npm.md)、[04 Git 与 GitHub](../../basics/04-git-and-github.md)、
+> [05 域名与 DNS](../../basics/05-domain-and-dns.md)、[06 HTTPS 与证书](../../basics/06-https-and-certificates.md) 四篇。
+
 一分钱不花,把静态网站放上公网、绑上自己的域名、带 HTTPS。本目录按"先跑通、再讲究"的顺序读:
 
 1. **[GitHub Pages](github-pages.md)** —— 零成本起步:仓库即站点,push 即部署。本项目第一个示范站(Reverie)走的就是这条链路

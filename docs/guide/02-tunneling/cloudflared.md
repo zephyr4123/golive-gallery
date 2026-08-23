@@ -5,6 +5,8 @@
 > Named Tunnel(绑 `<SUBDOMAIN>.<BASE_DOMAIN>` 那条)**本项目还没做,所以本篇不写**——见文末[为什么这里断在这儿](#为什么本篇到此为止)。
 >
 > 全篇输出实拍于 2026-08-22,cloudflared `2026.8.2` / macOS arm64。命令都是真跑过的,日志是原样贴的。
+>
+> 📖 需要先懂的:[08 内网穿透的原理](../../basics/08-tunneling.md)、[07 Cloudflare 是什么](../../basics/07-cloudflare.md)。
 
 ## 原理一句话
 

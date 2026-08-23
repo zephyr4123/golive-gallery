@@ -2,6 +2,10 @@
 
 > 目标:买一个自己的域名,把解析托管到 Cloudflare,免费拿到边缘 HTTPS。
 > 本篇是本项目的正式域名架构:**注册商(腾讯云)+ 解析商(Cloudflare)分离**——先读[05 · 域名与 DNS 的「模型一」](../../basics/05-domain-and-dns.md)理解为什么可以分离。
+>
+> 📖 配套概念:[05 域名与 DNS](../../basics/05-domain-and-dns.md)(记录类型、NS、TTL 与缓存)、
+> [06 HTTPS 与证书](../../basics/06-https-and-certificates.md)(证书跟域名走不跟服务器走)、
+> [07 Cloudflare 是什么](../../basics/07-cloudflare.md)(橙云灰云、Universal SSL 覆盖到哪)。
 
 ## 为什么解析放 Cloudflare
 

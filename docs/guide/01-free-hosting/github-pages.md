@@ -3,6 +3,9 @@
 > 适合:纯静态站(构建产物是一堆文件)。费用:0。前提:公开仓库(免费账号)。
 > 本篇的活例子:本仓库的 `sites/dreamcore`,线上地址 `dreamcore.<BASE_DOMAIN>`。
 
+> 📖 需要先懂的:[Git 与 GitHub](../../basics/04-git-and-github.md)(仓库、分支、push 为什么等于发布)、
+> [Node 与 npm](../../basics/03-node-and-npm.md)(什么是构建、为什么上线的是 `dist/`)。
+
 ## 原理一句话
 
 GitHub 把你仓库里(或 CI 构建出的)静态文件,放到它的全球 CDN 上按域名分发。你不用管服务器、带宽、扩容——代价是只能放静态内容,且**一个仓库只能有一个 Pages 站**。
