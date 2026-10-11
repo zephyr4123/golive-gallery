@@ -8,10 +8,8 @@ dist/
 .env.*
 !.env.example
 
-# AI 协作脚手架(本机私有注入,不进版本库)
-CLAUDE.md
+# Claude Code 本机私有文件(不进版本库)
 CLAUDE.local.md
-AGENTS.md
 
 # 浏览器验证产物(Playwright MCP 的快照/截图,只服务于当次验证)
 .playwright-mcp/
